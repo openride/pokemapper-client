@@ -1,0 +1,250 @@
+body {
+  font-family: 'Open Sans', sans-serif;;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#top {
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  width: 100%;
+}
+
+
+div {
+  box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4 {
+  color: #555;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin: 0.2em 0;
+  text-align: center;
+}
+h1 {
+  font-size: 1.618em;
+}
+h1 img {
+  max-width: 100%;
+}
+h2 {
+  font-size: 1.2em;
+  margin: 10px 0 12px;
+}
+
+p {
+  margin: 0;
+}
+
+.form-row {
+  margin: 10px 0;
+}
+
+.button-row {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.pokebutton {
+  color: white;
+  font: inherit;
+  border-width: 0;
+  border-radius: 40px;
+  padding: 10px 30px;
+  text-transform: uppercase;
+}
+
+#entry {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 5px;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: -300px;
+  padding: 10px;
+  z-index: 1;
+  transition: bottom 0.5s;
+}
+
+.barq-text-input {
+  color: #0a8b9e;
+  border: 1px solid #009b91;
+  border-radius: 16px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  min-width: 100px;
+  width: 100%;
+}
+.barq-list {
+  color: #0a8b9e;
+  border-color: #009b91;
+  max-height: 115px;
+  font-weight: normal;
+}
+.barq-active-item {
+  color: #0a8b9e;
+  background-color: #7ee8af;
+  font-weight: bold;
+}
+
+#entry-cancel {
+  margin-top: 5px;
+}
+
+.fb-user-position {
+  position: absolute;
+  left: 20px;
+  bottom: 36px;
+}
+
+.user {
+  display: none;
+}
+.user img {
+  border-radius: 30px;
+  border: 1px solid #7ee8af;
+  box-shadow: 0 0 0 3px #009b91;
+}
+
+.fb-like-position {
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+}
+.fb-like-position > a {
+  color: #0a8b9e;
+  text-decoration: none;
+}
+.fb-like-position > a > img {
+  border: none;
+  vertical-align: middle;
+  position: relative;
+  margin-right: 5px;
+}
+
+.overlay {
+  background: #fff;
+  box-shadow: 0 0 6px hsla(0, 0%, 0%, 0.2);
+}
+
+.button-grad {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ee8af+0,7eed76+0,009b91+100 */
+  background: #7ee8af; /* Old browsers */
+  background: -moz-linear-gradient(left, #7ee8af 0%, #7eed76 0%, #009b91 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #7ee8af 0%,#7eed76 0%,#009b91 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #7ee8af 0%,#7eed76 0%,#009b91 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ee8af', endColorstr='#009b91',GradientType=1 ); /* IE6-9 */
+}
+
+.circle-button {
+  box-shadow: 0 0 0 3px #008891;
+  color: #7ee8af;
+  border: 1px solid #7ee8af;
+  height: 40px;
+  width: 40px;
+  background: #008891;
+  padding: 0;
+}
+
+.login {
+  box-sizing: border-box;
+  color: #fff;
+  height: 60px;
+  padding-top: 5px;
+  width: 60px;
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.date-form-row {
+}
+
+.datepicker-input,
+.daynight-toggle {
+  width: auto;
+}
+.datepicker-input {
+  min-width: 100px;
+}
+.daynight-toggle {
+  cursor: pointer;
+  min-width: 0;
+  border-radius: 0;
+  text-transform: uppercase;
+}
+.daynight-toggle.day {
+  border-right-width: 0;
+  margin: 0 -8px;
+}
+.daynight-toggle.night {
+  border-left-width: 0;
+  margin-left: -16px;
+  border-bottom-right-radius: 16px;
+  border-top-right-radius: 16px;
+}
+:checked + .daynight-toggle {
+  background: #009b91;
+  color: #fff;
+  border-radius: 16px;
+  border-width: 0;
+  z-index: 1;
+}
+:not(:checked) + .daynight-toggle {
+  margin: 0;
+}
+
+.datepicker-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+}
+
+
+.dateline {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dateline-date {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.dateline-daynight-toggle {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
