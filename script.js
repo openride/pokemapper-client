@@ -51,6 +51,11 @@ var map = new mapboxgl.Map({
 
 var welcome = document.getElementById('welcome');
 
+var logo = document.querySelector('h1 > .img-wrap');
+var searchButton = document.getElementById('search');
+var searchMag = document.querySelector('#search .mag');
+var searchX = document.querySelector('#search .x');
+
 var messages = document.getElementById('messages');
 
 var geoButton = document.querySelector('.center-me');
@@ -66,13 +71,22 @@ var entry = document.getElementById('entry');
 var entryForm = document.getElementById('entry-form');
 var entryError = document.getElementById('entry-error');
 var entrySelect = document.getElementById('species');
-var entrySelectBarq = new Barq(entrySelect, {
+var searchSelect = entrySelect.cloneNode(true);
+var searchWrap = document.getElementById('search-input-wrap');
+searchWrap.appendChild(searchSelect);
+var barqOpts = {
   enablePagination: false,
   removeFirstOptionFromSearch: true,
   useFirstOptionTextAsPlaceholder: false,
   placeholderText: 'Enter Species',
   noResultsMessage: 'No Pokemon found',
-}).init();
+};
+var entrySelectBarq = new Barq(entrySelect, barqOpts).init();
+var searchSelectBarq = new Barq(searchSelect, Object.assign({}, barqOpts, {
+  onchange: function barqHandler() {
+    search(this.value);
+  },
+})).init();
 var entryDatepiker = document.getElementById('datepicker');
 var picker = new Pikaday({
   field: entryDatepiker,
@@ -132,7 +146,7 @@ function positionMe(position) {
       lng: position.coords.longitude,
       lat: position.coords.latitude,
     },
-    pitch: 30,
+    pitch: 20,
     zoom: 16,
     bearing: 0
   });
@@ -196,8 +210,8 @@ message('Loading Pokémon...', function(closeMessage) {
     }
     map.on('load', function() {
       sightingsData = result;
-      sightings = new mapboxgl.GeoJSONSource({ data: sightingsData });
-      map.addSource('sightings', sightings);
+      updateData();
+      map.addSource('sightings', filteredData);
       map.addLayer({
         id: 'sightings',
         source: 'sightings',
@@ -243,6 +257,7 @@ var fbName = null;
 var fbId = null;
 
 var welcomeIsOpen = true;
+var searchIsShowing = false;
 
 var isLogging = false;
 var isSaving = false;
@@ -254,12 +269,30 @@ var hasPositioned = false;
 var myPosition = null;
 var myLocation = null;
 var sightingsData = null;
-var sightings = null;
+var typeFilter = null;
+var filteredData = new mapboxgl.GeoJSONSource({ data:
+  { type: 'FeatureCollection', features: [] } });
 
 var mapHasLoaded = false;
 var popupOpen = false;
 
 var creditsShowing = false;
+
+
+function updateData() {
+  var filtered;
+  var speciesId = parseInt(typeFilter);
+  if (typeFilter) {
+    filtered = Object.assign({}, sightingsData, {
+      features: sightingsData.features.filter(function(feature) {
+        return feature.properties.speciesId === speciesId;
+      }),
+    });
+  } else {
+    filtered = sightingsData;
+  }
+  filteredData.setData(filtered);
+}
 
 
 function message(t, doStuff) {
@@ -363,7 +396,7 @@ function save() {
         woo('Saved.');
         cancelLog();
         sightingsData.features.push(JSON.parse(result));
-        sightings.setData(sightingsData);
+        updateData();
       }
     });
   });
@@ -435,6 +468,34 @@ function closeWelcome() {
   welcomeIsOpen = false;
 }
 
+function showSearch() {
+  function doit() {
+    ga('send', 'event', 'UI', 'Open Search');
+    searchIsShowing = true;
+    logo.style.display = 'none';
+    searchMag.style.display = 'none';
+    searchWrap.style.display = 'block';
+    searchX.style.display = 'block';
+    searchSelectBarq.focus();
+  }
+  mapHasLoaded ? doit() : map.on('load', doit);
+}
+
+function search(id) {
+  typeFilter = id;
+  updateData();
+}
+
+function hideSearch() {
+  searchSelectBarq.clear();
+  search(null);
+  searchIsShowing = false;
+  searchWrap.style.display = 'none';
+  searchX.style.display = 'none';
+  logo.style.display = 'block';
+  searchMag.style.display = 'block';
+}
+
 loginButton.addEventListener('click', function() {
   ga('send', 'event', 'Accounts', 'Click log in', 'FAB');
   startFbLogin();
@@ -469,6 +530,11 @@ map.on('click', function(e) {
 map.on('mousemove', function(e) {
   var features = map.queryRenderedFeatures(e.point, { layers: ['sightings'] });
   map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+});
+
+
+searchButton.addEventListener('click', function() {
+  searchIsShowing ? hideSearch() : showSearch();
 });
 
 

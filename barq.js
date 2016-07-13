@@ -352,6 +352,10 @@
             return items;
         };
 
+        barq.focus = function() {
+          barq.textInput.focus();
+        };
+
         /**
          * @function showList
          * Shows the list element.
@@ -390,7 +394,7 @@
          *
          * @param {HTMLLIElement} item The item to base the scrolling on.
          */
-        barq.selectItem = function(item) {
+        barq.selectItem = function(item, dontHide) {
             var selectedText = utils.getTextNode(item);
 
             // Sets the selected item's text on the input
@@ -399,8 +403,10 @@
             // Stores the text on barq itself
             barq.text = selectedText;
 
-            // Hides the list as we don't need it anymore
-            barq.hideList();
+            if (!dontHide) {
+              // Hides the list as we don't need it anymore
+              barq.hideList();
+            }
 
             // Works for both <li> items and <option> items
             var val = item.getAttribute('data-value') ? item.getAttribute('data-value') : item.value;
@@ -614,6 +620,9 @@
 
                 // Scrolls the list to show the item
                 barq.scrollListItemIntoView(itemToActivate);
+
+                // go ahead and kick off the client filtering
+                barq.selectItem(itemToActivate, true);
             }
         };
 
@@ -746,6 +755,10 @@
 
             // Selects the active item in case of pressing tab or leaving the field
             utils.addEventListener(barq.textInput, 'blur', function() {
+                if (!barq.textInput.value) {
+                  barq.clear();
+                  return;
+                }
                 if (!barq.preventBlurTrigger && barq.getActiveListItem()) {
                     barq.selectItem(barq.getActiveListItem());
                 }

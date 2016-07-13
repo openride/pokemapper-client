@@ -192,12 +192,19 @@ p {
       -ms-flex: 0 0 48px;
           flex: 0 0 48px;
   margin-left: 5px;
-  font-size: 80%;
-  /*width: 15vw;
-  max-width: 100px;
-  height: 15vw;
-  max-height: 100px;*/
+  font-size: 72%;
   border-radius: 8vw;
+}
+
+#search-input-wrap {
+  display: none;
+  text-align: left;
+  text-transform: none;
+  margin-left: 5px;
+}
+
+#search .x {
+  display: none;
 }
 
 .center-me {
