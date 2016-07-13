@@ -196,10 +196,13 @@ function save() {
     timing: daynight,
     coordinates: [selectedLngLat.lng, selectedLngLat.lat],
   }, function(err, result) {
-    console.log(err, result);
+    if (err) {
+      throw err;
+    }
+    cancelLog();
   });
+  entrySave.classList.remove('button-grad');
   ga('send', 'event', 'Sightings', 'Add', species);
-  return true;
 }
 
 
@@ -207,6 +210,8 @@ function cancelLog() {
   isLogging = false;
   entry.style.bottom = '-300px';
   entryError.style.display = 'none';
+  entrySelectBarq.clear();
+  entrySave.classList.add('button-grad');
   map.flyTo({ zoom: prevZoom, pitch: 30 });
   map.removeLayer('blah');
   map.removeSource('blah');
@@ -243,7 +248,7 @@ map.on('click', function(e) {
 
 entryForm.addEventListener('submit', function(e) {
   e.preventDefault();
-  save() && cancelLog();
+  save();
 });
 
 entryCancel.addEventListener('click', function(e) {

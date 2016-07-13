@@ -415,6 +415,16 @@
             barq.options.onchange.call(barq);
         };
 
+
+        barq.clear = function() {
+          barq.textInput.value = null;
+          barq.text = null;
+          barq.hideList();
+          barq.baseField.value = null;
+          barq.value = null;
+          barq.options.onchange.call(barq);
+        };
+
         /**
          * @function createEmptyList
          * Creates an empty <ul> element and inserts it after the autocomplete input.
