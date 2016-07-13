@@ -122,6 +122,21 @@ p {
   margin-top: 5px;
 }
 
+.center-me {
+  background: white;
+  border: none;
+  box-shadow: 0 1px 4px hsla(0, 0%, 0%, 0.333);
+  border-radius: 30px;
+  position: absolute;
+  right: 12px;
+  bottom: 65px;
+  height: 48px;
+  width: 48px;
+  text-align: center;
+  line-height: 48px;
+  font-size: 32px;
+}
+
 .fb-user-position {
   position: absolute;
   left: 20px;
@@ -135,6 +150,8 @@ p {
   border-radius: 30px;
   border: 1px solid #7ee8af;
   box-shadow: 0 0 0 3px #009b91;
+  height: 60px;
+  width: 60px;
 }
 
 .fb-like-position {

@@ -50,6 +50,8 @@ var map = new mapboxgl.Map({
 
 var messages = document.getElementById('messages');
 
+var geoButton = document.querySelector('.center-me');
+
 var loginButton = document.querySelector('button.login');
 var user = document.querySelector('.user');
 var userImg = document.querySelector('.user img');
@@ -117,10 +119,26 @@ function positionThing(position) {
   };
 }
 
+
+function positionMe(position) {
+  map.flyTo({
+    center: {
+      lng: position.coords.longitude,
+      lat: position.coords.latitude,
+    },
+    pitch: 30,
+    zoom: 16,
+    bearing: 0
+  });
+}
+
+
 message('Waiting for GPS...', function(closeMessage) {
   navigator.geolocation.getCurrentPosition(function(position) {
     closeMessage();
     map.on('load', function() {
+      hasPositioned = true;
+      myPosition = position;
       myLocation = new mapboxgl.GeoJSONSource({
         data: positionThing(position)
       });
@@ -149,19 +167,14 @@ message('Waiting for GPS...', function(closeMessage) {
           'circle-opacity': 1,
         },
       });
-      map.flyTo({
-        center: {
-          lng: position.coords.longitude,
-          lat: position.coords.latitude,
-        },
-        pitch: 30,
-        zoom: 16,
-      });
+      positionMe(position);
     }, noop, positionOpts);
   });
 });
 map.on('load', function() {
+  mapHasLoaded = true;
   navigator.geolocation.watchPosition(function(position) {
+    myPosition = position;
     myLocation.setData(positionThing(position));
   }, noop, positionOpts);
 });
@@ -228,10 +241,13 @@ var loggingPin = null;
 var prevZoom = 16;
 var selectedLngLat = null;
 
+var hasPositioned = false;
+var myPosition = null;
 var myLocation = null;
 var sightingsData = null;
 var sightings = null;
 
+var mapHasLoaded = false;
 var popupOpen = false;
 
 
@@ -355,6 +371,11 @@ function cancelLog() {
   map.removeLayer('blah');
   map.removeSource('blah');
 }
+
+
+geoButton.addEventListener('click', function() {
+  hasPositioned && mapHasLoaded && positionMe(myPosition);
+});
 
 
 // wiriting it all up
