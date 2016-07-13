@@ -122,7 +122,7 @@ var selectedLngLat = null;
 
 // spaghetti
 function login(me) {
-  ga.send('event', 'Account', 'Log in', me.id);
+  ga('send', 'event', 'Account', 'Log in', me.id);
   isLoggedIn = true;
   fbId = me.id;
   fbName = me.first_name;
@@ -133,7 +133,7 @@ function login(me) {
 
 
 function log(lngLat) {
-  ga.send('event', 'Sightings', 'Begin entry');
+  ga('send', 'event', 'Sightings', 'Begin entry');
   isLogging = true;
   selectedLngLat = lngLat;
   prevZoom = map.getZoom();
@@ -170,7 +170,7 @@ function save() {
     timing: 'day',
     coordinates: [selectedLngLat.lng, selectedLngLat.lat],
   });
-  ga.send('event', 'Sightings', 'Add', speciesId);
+  ga('send', 'event', 'Sightings', 'Add', speciesId);
 }
 
 
@@ -186,7 +186,7 @@ function cancelLog() {
 
 // wiriting it all up
 loginButton.addEventListener('click', function() {
-  ga.send('event', 'Accounts', 'Click log in');
+  ga('send', 'event', 'Accounts', 'Click log in');
   FB.login(function(res) {
     if (res.status === 'connected') {
       FB.api('/me', { fields: 'first_name' }, function(response) {
