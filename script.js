@@ -42,7 +42,6 @@ var map = new mapboxgl.Map({
     zoom: 2,
     center: [-94.4519211, 38.9926981],
 });
-map.setPitch(30);
 
 var loginButton = document.querySelector('button.login');
 var user = document.querySelector('.user');
@@ -75,6 +74,7 @@ function setPosition(position, zoom) {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       },
+      pitch: 30,
       zoom: 16,
     });
   }
