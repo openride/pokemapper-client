@@ -38,7 +38,6 @@ function post(url, json, cb) {
 }
 
 
-
 // map & controls setup
 mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG9yIiwiYSI6ImNpcWowcXNhNzA4OWlmb25wNWtleDZteW0ifQ.APZZax09ngrMpErBAcQW5w';
 var map = new mapboxgl.Map({
@@ -48,6 +47,9 @@ var map = new mapboxgl.Map({
   zoom: 2,
   center: [-94.4519211, 38.9926981],
 });
+
+
+var welcome = document.getElementById('welcome');
 
 var messages = document.getElementById('messages');
 
@@ -238,6 +240,8 @@ var isLoggedIn = false;
 var fbName = null;
 var fbId = null;
 
+var welcomeIsOpen = true;
+
 var isLogging = false;
 var isSaving = false;
 var loggingPin = null;
@@ -419,7 +423,13 @@ function sightingDetails(e) {
 }
 
 function hideCredits() {
+  // should set a global var?
   credits.style.display = 'none';
+}
+
+function closeWelcome() {
+  welcome.style.bottom = '-300px';
+  welcomeIsOpen = false;
 }
 
 loginButton.addEventListener('click', function() {
@@ -477,6 +487,10 @@ creditsLink.addEventListener('click', function(e) {
 
 credits.addEventListener('click', function() {
   hideCredits();
+});
+
+welcome.addEventListener('click', function() {
+  closeWelcome();
 });
 
 window.addEventListener('keydown', function(e) {
