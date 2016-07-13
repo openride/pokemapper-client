@@ -86,51 +86,55 @@ var positionOpts = { enableHighAccuracy: true };
 message('Waiting for GPS...', function(closeMessage) {
   navigator.geolocation.getCurrentPosition(function(position) {
     closeMessage();
-    myLocation = new mapboxgl.GeoJSONSource({
-      data: {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            position.coords.longitude,
-            position.coords.latitude,
-          ]
+    map.on('load', function() {
+      myLocation = new mapboxgl.GeoJSONSource({
+        data: {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              position.coords.longitude,
+              position.coords.latitude,
+            ]
+          }
         }
+      });
+      map.addSource('myLocation', myLocation);
+      map.addLayer({
+        id: 'myLocation',
+        source: 'myLocation',
+        type: 'circle',
+        paint: {
+          'circle-color': '#f90',
+          'circle-radius': 12,
+          'circle-opacity': 0.5,
+        },
+      });
+      map.flyTo({
+        center: {
+          lng: position.coords.longitude,
+          lat: position.coords.latitude,
+        },
+        pitch: 30,
+        zoom: 16,
+      });
+    }, noop, positionOpts);
+  });
+});
+map.on('load', function() {
+  navigator.geolocation.watchPosition(function(position) {
+    myLocation.setData({
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          position.coords.longitude,
+          position.coords.latitude,
+        ]
       }
-    });
-    map.addSource('myLocation', myLocation);
-    map.addLayer({
-      id: 'myLocation',
-      source: 'myLocation',
-      type: 'circle',
-      paint: {
-        'circle-color': '#f90',
-        'circle-radius': 12,
-        'circle-opacity': 0.5,
-      },
-    });
-    map.flyTo({
-      center: {
-        lng: position.coords.longitude,
-        lat: position.coords.latitude,
-      },
-      pitch: 30,
-      zoom: 16,
     });
   }, noop, positionOpts);
 });
-navigator.geolocation.watchPosition(function(position) {
-  myLocation.setData({
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [
-        position.coords.longitude,
-        position.coords.latitude,
-      ]
-    }
-  });
-}, noop, positionOpts);
 
 
 message('Loading sighted pokemon...', function(closeMessage) {
@@ -142,10 +146,9 @@ message('Loading sighted pokemon...', function(closeMessage) {
       return;
     }
     map.on('load', function() {
-      map.addSource('sightings', {
-        type: 'geojson',
-        data: result,
-      });
+      sightingsData = result;
+      sightings = new mapboxgl.GeoJSONSource({ data: sightingsData });
+      map.addSource('sightings', sightings);
       map.addLayer({
         id: 'sightings',
         source: 'sightings',
@@ -167,11 +170,14 @@ var fbName = null;
 var fbId = null;
 
 var isLogging = false;
+var isSaving = false;
 var loggingPin = null;
 var prevZoom = 16;
 var selectedLngLat = null;
 
 var myLocation = null;
+var sightingsData = null;
+var sightings = null;
 
 
 function message(t, doStuff) {
@@ -249,6 +255,7 @@ function noGood() {
 
 
 function save() {
+  if (isSaving) return;
   entryError.style.display = 'none';
   var species = entrySelectBarq.value;
   if (!species) {
@@ -256,6 +263,7 @@ function save() {
   }
   var date = picker.getDate();
   var daynight = document.querySelector('input[name="daynight"]:checked').value;
+  isSaving = true;
   message('Saving...', function(closeMessage) {
     post('/sightings', {
       fbId: fbId,
@@ -264,6 +272,7 @@ function save() {
       timing: daynight,
       coordinates: [selectedLngLat.lng, selectedLngLat.lat],
     }, function(err, result) {
+      isSaving = false;
       closeMessage();
       if (err) {
         complain('Could not save :(');
@@ -271,6 +280,8 @@ function save() {
       } else {
         woo('Saved.');
         cancelLog();
+        sightingsData.features.push(JSON.parse(result));
+        sightings.setData(sightingsData);
       }
     });
   });
