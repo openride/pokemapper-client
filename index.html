@@ -12,9 +12,10 @@
   </head>
   <body>
     <script>
+      var isProd = window.location.host === 'pokemapper.co';
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '306876449657804',
+          appId      : isProd ? '306585593020223' : '306876449657804',
           cookie     : true,
           xfbml      : true,
           version    : 'v2.6'
