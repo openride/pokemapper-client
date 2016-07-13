@@ -30,7 +30,7 @@ function get(url, cb) {
   request.open('GET', `${SERVER}${url}`, true);
   request.send();
 }
-function post(url, json) {
+function post(url, json, cb) {
   var request = new XMLHttpRequest();
   _ajaxCb(request, cb);
   request.open('POST', `${SERVER}${url}`, true);
@@ -58,6 +58,7 @@ var entryLoginButton = document.getElementById('entry-login-button');
 
 var entry = document.getElementById('entry');
 var entryForm = document.getElementById('entry-form');
+var entryError = document.getElementById('entry-error');
 var entrySelect = document.getElementById('species');
 var entrySelectBarq = new Barq(entrySelect, {
   enablePagination: false,
@@ -72,6 +73,7 @@ var picker = new Pikaday({
   minDate: new Date(new Date() - 7 * 24 * 60 * 60 * 1000),
   maxDate: new Date(),
 });
+var entrySave = document.getElementById('save');
 var entryCancel = document.getElementById('entry-cancel');
 
 
@@ -174,22 +176,37 @@ function log(lngLat) {
 }
 
 
+function noGood() {
+  entryError.style.display = 'block';
+}
+
+
 function save() {
-  console.log({
+  entryError.style.display = 'none';
+  var species = entrySelectBarq.value;
+  if (!species) {
+    return noGood();
+  }
+  var date = picker.getDate();
+  var daynight = document.querySelector('input[name="daynight"]:checked').value;
+  post('/sightings', {
     speciesId: entrySelectBarq.value,
     date: picker.getDate(),
-    timing: 'day',
+    timing: daynight,
     coordinates: [selectedLngLat.lng, selectedLngLat.lat],
+  }, function(err, result) {
+    console.log(err, result);
   });
-  ga('send', 'event', 'Sightings', 'Add', speciesId);
+  ga('send', 'event', 'Sightings', 'Add', species);
+  return true;
 }
 
 
 function cancelLog() {
   isLogging = false;
   entry.style.bottom = '-300px';
+  entryError.style.display = 'none';
   map.flyTo({ zoom: prevZoom, pitch: 30 });
-  // map.zoomTo(prevZoom);
   map.removeLayer('blah');
   map.removeSource('blah');
 }
@@ -225,8 +242,7 @@ map.on('click', function(e) {
 
 entryForm.addEventListener('submit', function(e) {
   e.preventDefault();
-  save();
-  cancelLog();
+  save() && cancelLog();
 });
 
 entryCancel.addEventListener('click', function(e) {

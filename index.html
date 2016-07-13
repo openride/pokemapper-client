@@ -65,6 +65,7 @@
     <div id="entry" class="overlay">
       <form id="entry-form" class="visuallyhidden">
         <h2>What did you catch?</h2>
+        <p id="entry-error">Missing species name!</p>
         <div class="form-row">
           <label for="species" class="visuallyhidden">Species</label>
           <select name="species" id="species">
@@ -233,7 +234,7 @@
           </span>
         </div>
         <div class="form-row button-row">
-          <button type="submit" class="pokebutton button-grad">
+          <button id="save" type="submit" class="pokebutton button-grad">
             save
           </button>
         </div>

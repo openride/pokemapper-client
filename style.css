@@ -85,6 +85,11 @@ p {
   text-align: center;
 }
 
+#entry-error {
+  display: none;
+  color: #905;
+}
+
 .barq-text-input {
   color: #0a8b9e;
   border: 1px solid #009b91;
