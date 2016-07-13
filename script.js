@@ -49,6 +49,8 @@ var map = new mapboxgl.Map({
     center: [-94.4519211, 38.9926981],
 });
 
+var messages = document.getElementById('messages');
+
 var loginButton = document.querySelector('button.login');
 var user = document.querySelector('.user');
 var userImg = document.querySelector('.user img');
@@ -77,9 +79,13 @@ var entrySave = document.getElementById('save');
 var entryCancel = document.getElementById('entry-cancel');
 
 
-// always put the map where we are (annoying?)
-function setPosition(position, zoom) {
-  if (!isLogging) {
+function noop() {}
+
+var positionOpts = { enableHighAccuracy: true };
+
+message('Waiting for GPS...', function(closeMessage) {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    closeMessage();
     map.flyTo({
       center: {
         lat: position.coords.latitude,
@@ -88,33 +94,33 @@ function setPosition(position, zoom) {
       pitch: 30,
       zoom: 16,
     });
-  }
-}
-function noop() {}
-var positionOpts = { enableHighAccuracy: true };
-navigator.geolocation.getCurrentPosition(function(position) {
-  setPosition(position, 16);
-}, noop, positionOpts);
-navigator.geolocation.watchPosition(setPosition, noop, positionOpts);
+  }, noop, positionOpts);
+})
+// navigator.geolocation.watchPosition(setPosition, noop, positionOpts);
 
-
-get('/sightings', function(err, result) {
-  if (err) throw err;
-  console.log('res', result);
-  map.on('load', function() {
-    map.addSource('sightings', {
-      type: 'geojson',
-      data: result,
-    });
-    map.addLayer({
-      id: 'sightings',
-      source: 'sightings',
-      type: 'circle',
-      paint: {
-        'circle-color': '#009b91',
-        'circle-radius': 16,
-        'circle-opacity': 0.5,
-      },
+message('Loading sighted pokemon...', function(closeMessage) {
+  get('/sightings', function(err, result) {
+    closeMessage();
+    if (err) {
+      complain('Failed to load sightings :(');
+      console.error(err);
+      return;
+    }
+    map.on('load', function() {
+      map.addSource('sightings', {
+        type: 'geojson',
+        data: result,
+      });
+      map.addLayer({
+        id: 'sightings',
+        source: 'sightings',
+        type: 'circle',
+        paint: {
+          'circle-color': '#009b91',
+          'circle-radius': 16,
+          'circle-opacity': 0.5,
+        },
+      });
     });
   });
 });
@@ -129,6 +135,30 @@ var isLogging = false;
 var loggingPin = null;
 var prevZoom = 16;
 var selectedLngLat = null;
+
+
+function message(t, doStuff) {
+  const m = document.createElement('p');
+  m.textContent = t;
+  messages.appendChild(m);
+  doStuff(function closeMessage() {
+    messages.removeChild(m);
+  });
+}
+
+
+function complain(msg) {
+  message(msg, function(closeMessage) {
+    setTimeout(closeMessage, 2000);
+  });
+}
+
+
+function woo(msg) {
+  message(msg, function(closeMessage) {
+    setTimeout(closeMessage, 1000);
+  });
+}
 
 
 // spaghetti
@@ -189,17 +219,23 @@ function save() {
   }
   var date = picker.getDate();
   var daynight = document.querySelector('input[name="daynight"]:checked').value;
-  post('/sightings', {
-    fbId: fbId,
-    speciesId: entrySelectBarq.value,
-    date: picker.getDate(),
-    timing: daynight,
-    coordinates: [selectedLngLat.lng, selectedLngLat.lat],
-  }, function(err, result) {
-    if (err) {
-      throw err;
-    }
-    cancelLog();
+  message('Saving...', function(closeMessage) {
+    post('/sightings', {
+      fbId: fbId,
+      speciesId: entrySelectBarq.value,
+      date: picker.getDate(),
+      timing: daynight,
+      coordinates: [selectedLngLat.lng, selectedLngLat.lat],
+    }, function(err, result) {
+      closeMessage();
+      if (err) {
+        complain('Could not save :(');
+        console.error(err);
+      } else {
+        woo('Saved.');
+        cancelLog();
+      }
+    });
   });
   entrySave.classList.remove('button-grad');
   ga('send', 'event', 'Sightings', 'Add', species);
@@ -220,12 +256,16 @@ function cancelLog() {
 
 // wiriting it all up
 function startFbLogin() {
-  FB.login(function(res) {
-    if (res.status === 'connected') {
-      FB.api('/me', { fields: 'first_name' }, function(response) {
-        login(response);
-      });
-    }
+  message('Logging in...', function(closeMessage) {
+    FB.login(function(res) {
+      if (res.status === 'connected') {
+        FB.api('/me', { fields: 'first_name' }, function(response) {
+          closeMessage();
+          woo('Hi, ' + response.first_name + '!');
+          login(response);
+        });
+      }
+    });
   });
 }
 loginButton.addEventListener('click', function() {
