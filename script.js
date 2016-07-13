@@ -1,3 +1,8 @@
+const SERVER = isProd
+  ? 'https://canary.pokemapper.c66.me'
+  : 'http://localhost:8000';
+
+
 // feature checks
 if (!('geolocation' in navigator)) {
   alert('Your browser may not support this app, sorry :(');
@@ -21,13 +26,13 @@ function get(url, cb) {
   _ajaxCb(request, function(err, responseText) {
     err ? cb(err) : cb(null, JSON.parse(responseText));
   });
-  request.open('GET', url, true);
+  request.open('GET', `${SERVER}${url}`, true);
   request.send();
 }
 function post(url, json) {
   var request = new XMLHttpRequest();
   _ajaxCb(request, cb);
-  request.open('POST', url, true);
+  request.open('POST', `${SERVER}${url}`, true);
   request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   request.send(JSON.stringify(json));
 }
