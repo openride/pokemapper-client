@@ -186,6 +186,14 @@ p {
 }
 
 .fb-like-position {
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -193,6 +201,7 @@ p {
 .fb-like-position > a {
   color: #0a8b9e;
   text-decoration: none;
+  padding: 0 2px;
 }
 .fb-like-position > a > img {
   border: none;
