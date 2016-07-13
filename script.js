@@ -84,6 +84,7 @@ var entryCancel = document.getElementById('entry-cancel');
 
 var creditsLink = document.getElementById('credits-link');
 var credits = document.getElementById('credits');
+var openRideLink = document.getElementById('open-ride-link');
 
 function noop() {}
 
@@ -404,6 +405,7 @@ function sightingDetails(e) {
   if (pokemon) {
     popupOpen = true;
     var props = pokemon.properties;
+    ga('send', 'event', 'Sightings', 'View', props._id);
     var name = allPokemon
       .filter(function(poke) {
         return poke.id === props.speciesId;
@@ -483,6 +485,16 @@ creditsLink.addEventListener('click', function(e) {
   e.preventDefault();
   creditsShowing = true;
   credits.style.display = 'block';
+});
+
+openRideLink.addEventListener('click', function(e) {
+  e.preventDefault();
+  ga('send', 'event', 'Outbound', 'Click', openRideLink.href, {
+    transport: 'beacon',
+    hitCallback: function() {
+      document.location = openRideLink.href;
+    }
+  });
 });
 
 credits.addEventListener('click', function() {
