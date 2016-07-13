@@ -80,6 +80,11 @@ p {
   transition: bottom 0.5s;
 }
 
+#entry-login p {
+  margin: 1em 0;
+  text-align: center;
+}
+
 .barq-text-input {
   color: #0a8b9e;
   border: 1px solid #009b91;

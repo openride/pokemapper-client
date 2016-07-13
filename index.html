@@ -63,7 +63,7 @@
     </div>
 
     <div id="entry" class="overlay">
-      <form id="entry-form">
+      <form id="entry-form" class="visuallyhidden">
         <h2>What did you catch?</h2>
         <div class="form-row">
           <label for="species" class="visuallyhidden">Species</label>
@@ -237,12 +237,19 @@
             save
           </button>
         </div>
-        <div class="form-row button-row">
-          <button id="entry-cancel" class="pokebutton button-grad circle-button">
-            &times;
-          </button>
-        </div>
       </form>
+      <div id="entry-login" class="log-in">
+        <h2>Save your sighting</h2>
+        <p>Log in to save your Pokemon Go sighting at this location</p>
+        <p>
+          <button id="entry-login-button" class="pokebutton button-grad">Log in</button>
+        </p>
+      </div>
+      <div class="form-row button-row">
+        <button id="entry-cancel" class="pokebutton button-grad circle-button">
+          &times;
+        </button>
+      </div>
     </div>
 
     <script src="/pikaday.js"></script>

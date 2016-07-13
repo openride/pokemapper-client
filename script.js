@@ -53,6 +53,9 @@ var loginButton = document.querySelector('button.login');
 var user = document.querySelector('.user');
 var userImg = document.querySelector('.user img');
 
+var entryLogin = document.getElementById('entry-login');
+var entryLoginButton = document.getElementById('entry-login-button');
+
 var entry = document.getElementById('entry');
 var entryForm = document.getElementById('entry-form');
 var entrySelect = document.getElementById('species');
@@ -135,6 +138,8 @@ function login(me) {
   loginButton.style.display = 'none';
   user.style.display = 'block';
   userImg.src = 'https://graph.facebook.com/v2.5/' + fbId + '/picture?height=60&width=60';
+  entryLogin.style.display = 'none';
+  entryForm.classList.remove('visuallyhidden');
 }
 
 
@@ -191,8 +196,7 @@ function cancelLog() {
 
 
 // wiriting it all up
-loginButton.addEventListener('click', function() {
-  ga('send', 'event', 'Accounts', 'Click log in');
+function startFbLogin() {
   FB.login(function(res) {
     if (res.status === 'connected') {
       FB.api('/me', { fields: 'first_name' }, function(response) {
@@ -200,6 +204,14 @@ loginButton.addEventListener('click', function() {
       });
     }
   });
+}
+loginButton.addEventListener('click', function() {
+  ga('send', 'event', 'Accounts', 'Click log in', 'FAB');
+  startFbLogin();
+});
+entryLoginButton.addEventListener('click', function() {
+  ga('send', 'event', 'Accounts', 'Click log in', 'Entry popup');
+  startFbLogin();
 });
 
 
