@@ -39,8 +39,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG9yIiwiYSI6ImNpcWowcXNhNzA4OWlmb25wNWtle
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/basic-v9',
-    zoom: 16,
-    center: [4.899, 52.372],
+    zoom: 2,
+    center: [-94.4519211, 38.9926981],
 });
 map.setPitch(30);
 
@@ -68,14 +68,23 @@ var entryCancel = document.getElementById('entry-cancel');
 
 
 // always put the map where we are (annoying?)
-navigator.geolocation.watchPosition(function(position) {
-  map.setCenter({
-    lat: position.coords.latitude,
-    lng: position.coords.longitude,
-  });
-}, function() {}, {
-  enableHighAccuracy: true,
-});
+function setPosition(position, zoom) {
+  if (!isLogging) {
+    map.flyTo({
+      center: {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      },
+      zoom: 16,
+    });
+  }
+}
+function noop() {}
+var positionOpts = { enableHighAccuracy: true };
+navigator.geolocation.getCurrentPosition(function(position) {
+  setPosition(position, 16);
+}, noop, positionOpts);
+navigator.geolocation.watchPosition(setPosition, noop, positionOpts);
 
 
 get('/mocked-sightings.json', function(err, result) {
@@ -113,7 +122,7 @@ var selectedLngLat = null;
 
 // spaghetti
 function login(me) {
-  console.log('me', me);
+  ga.send('event', 'Account', 'Log in', me.id);
   isLoggedIn = true;
   fbId = me.id;
   fbName = me.first_name;
@@ -124,6 +133,7 @@ function login(me) {
 
 
 function log(lngLat) {
+  ga.send('event', 'Sightings', 'Begin entry');
   isLogging = true;
   selectedLngLat = lngLat;
   prevZoom = map.getZoom();
@@ -160,6 +170,7 @@ function save() {
     timing: 'day',
     coordinates: [selectedLngLat.lng, selectedLngLat.lat],
   });
+  ga.send('event', 'Sightings', 'Add', speciesId);
 }
 
 
@@ -175,6 +186,7 @@ function cancelLog() {
 
 // wiriting it all up
 loginButton.addEventListener('click', function() {
+  ga.send('event', 'Accounts', 'Click log in');
   FB.login(function(res) {
     if (res.status === 'connected') {
       FB.api('/me', { fields: 'first_name' }, function(response) {
