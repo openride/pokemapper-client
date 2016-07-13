@@ -1,6 +1,6 @@
 const SERVER = isProd
   ? 'https://canary.pokemapper.c66.me'
-  : 'http://localhost:8000';
+  : 'http://localhost:3000';
 
 
 // feature checks
@@ -10,6 +10,7 @@ if (!('geolocation' in navigator)) {
 
 // ajax utils
 function _ajaxCb(request, cb) {
+  // request.withCredentials = 'true';  // string?!
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
       cb(null, request.responseText);
@@ -92,7 +93,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 navigator.geolocation.watchPosition(setPosition, noop, positionOpts);
 
 
-get('/mocked-sightings.json', function(err, result) {
+get('/sightings', function(err, result) {
   if (err) throw err;
   console.log('res', result);
   map.on('load', function() {
