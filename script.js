@@ -186,10 +186,10 @@ map.on('load', function() {
 });
 
 
-message('Loading sighted pokemon...', function(closeMessage) {
+message('Loading Pokémon...', function(closeMessage) {
   get('/sightings', function(err, result) {
-    closeMessage();
     if (err) {
+      closeMessage();
       complain('Failed to load sightings :(');
       console.error(err);
       return;
@@ -231,6 +231,7 @@ message('Loading sighted pokemon...', function(closeMessage) {
           'circle-opacity': 0.667,
         },
       });
+      closeMessage();
     });
   });
 });
