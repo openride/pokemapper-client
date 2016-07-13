@@ -1,5 +1,5 @@
 const SERVER = isProd
-  ? 'https://canary.pokemapper.c66.me'
+  ? 'https://data.pokemapper.co'
   : 'http://localhost:3000';
 
 
