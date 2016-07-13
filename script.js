@@ -190,6 +190,7 @@ function save() {
   var date = picker.getDate();
   var daynight = document.querySelector('input[name="daynight"]:checked').value;
   post('/sightings', {
+    fbId: fbId,
     speciesId: entrySelectBarq.value,
     date: picker.getDate(),
     timing: daynight,
