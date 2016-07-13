@@ -41,6 +41,14 @@ body {
   transition: bottom 0.5s;
   padding: 10px;
 }
+@media screen and (min-width: 800px) {
+  #welcome {
+    border-radius: 6px;
+    bottom: 30%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
 
 #welcome p {
   color: #009b91;
