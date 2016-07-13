@@ -71,13 +71,30 @@ h4 {
   text-align: center;
 }
 h1 {
-  font-size: 1.618em;
-}
-h1 img {
   box-sizing: border-box;
   max-width: 480px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 30px;
+  font-size: 1.618em;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+h1 .img-wrap {
+  -webkit-box-flex: 1 1;
+-webkit-flex: 1 1;
+    -ms-flex: 1 1;
+        flex: 1 1;
+}
+h1 img {
+  width: 100%;
 }
 h2 {
   font-size: 1.2em;
@@ -153,19 +170,40 @@ p {
   margin-top: 5px;
 }
 
-.center-me {
+.fab {
+  align-items: center;
   background: white;
   border: none;
   box-shadow: 0 1px 4px hsla(0, 0%, 0%, 0.333);
   border-radius: 30px;
-  position: absolute;
-  right: 12px;
-  bottom: 48px;
+  cursor: pointer;
+  display: flex;
   height: 48px;
+  justify-content: center;
   width: 48px;
   text-align: center;
   line-height: 48px;
-  font-size: 32px;
+  font-size: 28px;
+}
+
+.search {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 48px;
+      -ms-flex: 0 0 48px;
+          flex: 0 0 48px;
+  margin-left: 5px;
+  font-size: 80%;
+  /*width: 15vw;
+  max-width: 100px;
+  height: 15vw;
+  max-height: 100px;*/
+  border-radius: 8vw;
+}
+
+.center-me {
+  position: absolute;
+  right: 12px;
+  bottom: 48px;
 }
 
 .fb-user-position {
@@ -222,6 +260,31 @@ p {
   background: -webkit-linear-gradient(left, #7ee8af 0%,#7eed76 0%,#009b91 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to right, #7ee8af 0%,#7eed76 0%,#009b91 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ee8af', endColorstr='#009b91',GradientType=1 ); /* IE6-9 */
+}
+
+.mag {
+  background: transparent;
+  border: 0.2em solid #008891;
+  border-radius: 0.5em;
+  box-sizing: border-box;
+  display: inline-block;
+  font: inherit;
+  height: 1em;
+  margin: -0.1em 0 0 -0.1em;
+  position: relative;
+  padding: 0;
+  width: 1em;
+}
+.mag:after {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 0.4em;
+  border-bottom: 0.3em solid #008891;
+  height: 0em;
+  right: -0.333em;
+  transform: rotate(45deg);
+  top: 0.57em;
 }
 
 .circle-button {
