@@ -86,17 +86,52 @@ var positionOpts = { enableHighAccuracy: true };
 message('Waiting for GPS...', function(closeMessage) {
   navigator.geolocation.getCurrentPosition(function(position) {
     closeMessage();
+    myLocation = new mapboxgl.GeoJSONSource({
+      data: {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            position.coords.longitude,
+            position.coords.latitude,
+          ]
+        }
+      }
+    });
+    map.addSource('myLocation', myLocation);
+    map.addLayer({
+      id: 'myLocation',
+      source: 'myLocation',
+      type: 'circle',
+      paint: {
+        'circle-color': '#f90',
+        'circle-radius': 12,
+        'circle-opacity': 0.5,
+      },
+    });
     map.flyTo({
       center: {
-        lat: position.coords.latitude,
         lng: position.coords.longitude,
+        lat: position.coords.latitude,
       },
       pitch: 30,
       zoom: 16,
     });
   }, noop, positionOpts);
-})
-// navigator.geolocation.watchPosition(setPosition, noop, positionOpts);
+});
+navigator.geolocation.watchPosition(function(position) {
+  myLocation.setData({
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        position.coords.longitude,
+        position.coords.latitude,
+      ]
+    }
+  });
+}, noop, positionOpts);
+
 
 message('Loading sighted pokemon...', function(closeMessage) {
   get('/sightings', function(err, result) {
@@ -136,6 +171,8 @@ var loggingPin = null;
 var prevZoom = 16;
 var selectedLngLat = null;
 
+var myLocation = null;
+
 
 function message(t, doStuff) {
   const m = document.createElement('p');
@@ -149,14 +186,14 @@ function message(t, doStuff) {
 
 function complain(msg) {
   message(msg, function(closeMessage) {
-    setTimeout(closeMessage, 2000);
+    setTimeout(closeMessage, 3000);
   });
 }
 
 
 function woo(msg) {
   message(msg, function(closeMessage) {
-    setTimeout(closeMessage, 1000);
+    setTimeout(closeMessage, 1500);
   });
 }
 
