@@ -42,10 +42,11 @@ function post(url, json, cb) {
 // map & controls setup
 mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG9yIiwiYSI6ImNpcWowcXNhNzA4OWlmb25wNWtleDZteW0ifQ.APZZax09ngrMpErBAcQW5w';
 var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/basic-v9',
-    zoom: 2,
-    center: [-94.4519211, 38.9926981],
+  attributionControl: false,
+  container: 'map',
+  style: 'mapbox://styles/mapbox/basic-v9',
+  zoom: 2,
+  center: [-94.4519211, 38.9926981],
 });
 
 var messages = document.getElementById('messages');
@@ -79,6 +80,8 @@ var picker = new Pikaday({
 var entrySave = document.getElementById('save');
 var entryCancel = document.getElementById('entry-cancel');
 
+var creditsLink = document.getElementById('credits-link');
+var credits = document.getElementById('credits');
 
 function noop() {}
 
@@ -250,6 +253,8 @@ var sightings = null;
 var mapHasLoaded = false;
 var popupOpen = false;
 
+var creditsShowing = false;
+
 
 function message(t, doStuff) {
   const m = document.createElement('p');
@@ -373,11 +378,6 @@ function cancelLog() {
 }
 
 
-geoButton.addEventListener('click', function() {
-  hasPositioned && mapHasLoaded && positionMe(myPosition);
-});
-
-
 // wiriting it all up
 function startFbLogin() {
   message('Logging in...', function(closeMessage) {
@@ -392,14 +392,6 @@ function startFbLogin() {
     });
   });
 }
-loginButton.addEventListener('click', function() {
-  ga('send', 'event', 'Accounts', 'Click log in', 'FAB');
-  startFbLogin();
-});
-entryLoginButton.addEventListener('click', function() {
-  ga('send', 'event', 'Accounts', 'Click log in', 'Entry popup');
-  startFbLogin();
-});
 
 
 function sightingDetails(e) {
@@ -426,8 +418,29 @@ function sightingDetails(e) {
   }
 }
 
+function hideCredits() {
+  credits.style.display = 'none';
+}
+
+loginButton.addEventListener('click', function() {
+  ga('send', 'event', 'Accounts', 'Click log in', 'FAB');
+  startFbLogin();
+});
+
+
+entryLoginButton.addEventListener('click', function() {
+  ga('send', 'event', 'Accounts', 'Click log in', 'Entry popup');
+  startFbLogin();
+});
+
+
+geoButton.addEventListener('click', function() {
+  hasPositioned && mapHasLoaded && positionMe(myPosition);
+});
+
 
 map.on('click', function(e) {
+  creditsShowing && hideCredits();
   if (isLogging) {
     cancelLog();
     sightingDetails(e);
@@ -456,6 +469,19 @@ entryCancel.addEventListener('click', function(e) {
   cancelLog();
 });
 
+creditsLink.addEventListener('click', function(e) {
+  e.preventDefault();
+  creditsShowing = true;
+  credits.style.display = 'block';
+});
+
+credits.addEventListener('click', function() {
+  hideCredits();
+});
+
 window.addEventListener('keydown', function(e) {
-  e.keyCode === 27 && cancelLog();
-})
+  if (e.keyCode === 27) {  // esc
+    isLogging && cancelLog();
+    creditsShowing && hideCredits();
+  }
+});
