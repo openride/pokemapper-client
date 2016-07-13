@@ -10,7 +10,6 @@ if (!('geolocation' in navigator)) {
 
 // ajax utils
 function _ajaxCb(request, cb) {
-  // request.withCredentials = 'true';  // string?!
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
       cb(null, request.responseText);
@@ -83,21 +82,47 @@ function noop() {}
 
 var positionOpts = { enableHighAccuracy: true };
 
+
+function positionThing(position) {
+  return {
+    type: 'FeatureCollection',
+    features: [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            position.coords.longitude,
+            position.coords.latitude,
+          ],
+        },
+        properties: {
+          role: 'outline'
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            position.coords.longitude,
+            position.coords.latitude,
+          ],
+        },
+        properties: {
+          role: 'fill'
+        }
+      },
+    ]
+  };
+}
+
 message('Waiting for GPS...', function(closeMessage) {
   navigator.geolocation.getCurrentPosition(function(position) {
     closeMessage();
     map.on('load', function() {
       myLocation = new mapboxgl.GeoJSONSource({
-        data: {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              position.coords.longitude,
-              position.coords.latitude,
-            ]
-          }
-        }
+        data: positionThing(position)
       });
       map.addSource('myLocation', myLocation);
       map.addLayer({
@@ -105,9 +130,23 @@ message('Waiting for GPS...', function(closeMessage) {
         source: 'myLocation',
         type: 'circle',
         paint: {
-          'circle-color': '#f90',
-          'circle-radius': 12,
-          'circle-opacity': 0.5,
+          'circle-color': {
+            property: 'role',
+            type: 'categorical',
+            stops: [
+              ['outline', '#fff'],
+              ['fill', '#24f'],
+            ],
+          },
+          'circle-radius': {
+            property: 'role',
+            type: 'categorical',
+            stops: [
+              ['outline', 12],
+              ['fill', 9],
+            ],
+          },
+          'circle-opacity': 1,
         },
       });
       map.flyTo({
@@ -123,16 +162,7 @@ message('Waiting for GPS...', function(closeMessage) {
 });
 map.on('load', function() {
   navigator.geolocation.watchPosition(function(position) {
-    myLocation.setData({
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          position.coords.longitude,
-          position.coords.latitude,
-        ]
-      }
-    });
+    myLocation.setData(positionThing(position));
   }, noop, positionOpts);
 });
 
