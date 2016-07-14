@@ -54,7 +54,7 @@ var welcome = document.getElementById('welcome');
 var helloMessage = document.getElementById('hello-message');
 var helloThrobber = document.getElementById('email-plz');
 var openRideHelloLink = document.getElementById('open-ride-link-hello');
-var helloForm = document.getElementById('mc-embedded-subscribe');
+var helloForm = document.getElementById('mc-embedded-subscribe-form');
 var helloCancel = document.getElementById('hello-cancel');
 
 var logo = document.querySelector('h1 > .img-wrap');
@@ -66,6 +66,7 @@ var messages = document.getElementById('messages');
 
 var geoButton = document.querySelector('.center-me');
 
+var userButton = document.querySelector('.fb-user-position');
 var loggedOutUserButton = document.querySelector('button.login');
 var user = document.querySelector('.user');
 var userImg = document.querySelector('.user img');
@@ -521,7 +522,7 @@ function closeHello() {
   helloMessage.style.bottom = '-500px';
 }
 
-loggedOutUserButton.addEventListener('click', function() {
+userButton.addEventListener('click', function() {
   ga('send', 'event', 'UI', 'Click user button');
   helloIsOpen ? closeHello() : hello();
 });
@@ -601,6 +602,7 @@ welcome.addEventListener('click', function() {
 
 helloForm.addEventListener('submit', function() {
   ga('send', 'event', 'Email', 'Subscribe');
+  closeHello();
 });
 
 helloCancel.addEventListener('click', function() {

@@ -250,6 +250,7 @@ p {
 }
 
 .fb-user-position {
+  cursor: pointer;
   position: relative;
   margin-top: 13px;
 }
@@ -289,6 +290,7 @@ p {
 }
 
 .pulse {
+  cursor: pointer;
   -webkit-animation: pulse 2s infinite;
           animation: pulse 2s infinite;
 }
