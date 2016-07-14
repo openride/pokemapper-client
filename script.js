@@ -53,6 +53,8 @@ var welcome = document.getElementById('welcome');
 
 var helloMessage = document.getElementById('hello-message');
 var helloThrobber = document.getElementById('email-plz');
+var openRideHelloLink = document.getElementById('open-ride-link-hello');
+var helloForm = document.getElementById('mc-embedded-subscribe');
 var helloCancel = document.getElementById('hello-cancel');
 
 var logo = document.querySelector('h1 > .img-wrap');
@@ -583,13 +585,10 @@ creditsLink.addEventListener('click', function(e) {
 });
 
 openRideLink.addEventListener('click', function(e) {
-  e.preventDefault();
-  ga('send', 'event', 'Outbound', 'Click', openRideLink.href, {
-    transport: 'beacon',
-    hitCallback: function() {
-      document.location = openRideLink.href;
-    }
-  });
+  ga('send', 'event', 'Outbound', 'Click', 'Who made this?');
+});
+openRideHelloLink.addEventListener('click', function(e) {
+  ga('send', 'event', 'Outbound', 'Click', 'Mailing list signup');
 });
 
 credits.addEventListener('click', function() {
@@ -598,6 +597,10 @@ credits.addEventListener('click', function() {
 
 welcome.addEventListener('click', function() {
   closeWelcome();
+});
+
+helloForm.addEventListener('submit', function() {
+  ga('send', 'event', 'Email', 'Subscribe');
 });
 
 helloCancel.addEventListener('click', function() {
