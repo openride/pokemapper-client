@@ -51,6 +51,10 @@ var map = new mapboxgl.Map({
 
 var welcome = document.getElementById('welcome');
 
+var helloMessage = document.getElementById('hello-message');
+var helloThrobber = document.getElementById('email-plz');
+var helloCancel = document.getElementById('hello-cancel');
+
 var logo = document.querySelector('h1 > .img-wrap');
 var searchButton = document.getElementById('search');
 var searchMag = document.querySelector('#search .mag');
@@ -60,7 +64,7 @@ var messages = document.getElementById('messages');
 
 var geoButton = document.querySelector('.center-me');
 
-var loginButton = document.querySelector('button.login');
+var loggedOutUserButton = document.querySelector('button.login');
 var user = document.querySelector('.user');
 var userImg = document.querySelector('.user img');
 
@@ -259,6 +263,8 @@ var fbId = null;
 var welcomeIsOpen = true;
 var searchIsShowing = false;
 
+var helloIsOpen = false;
+
 var isLogging = false;
 var isSaving = false;
 var loggingPin = null;
@@ -325,7 +331,7 @@ function login(me) {
   isLoggedIn = true;
   fbId = me.id;
   fbName = me.first_name;
-  loginButton.style.display = 'none';
+  loggedOutUserButton.style.display = 'none';
   user.style.display = 'block';
   userImg.src = 'https://graph.facebook.com/v2.5/' + fbId + '/picture?height=60&width=60';
   entryLogin.style.display = 'none';
@@ -502,9 +508,20 @@ function hideSearch() {
   searchMag.style.display = 'block';
 }
 
-loginButton.addEventListener('click', function() {
-  ga('send', 'event', 'Accounts', 'Click log in', 'FAB');
-  startFbLogin();
+function hello() {
+  helloIsOpen = true;
+  helloMessage.style.bottom = '0';
+  helloThrobber.style.display = 'none';
+}
+
+function closeHello() {
+  helloIsOpen = false;
+  helloMessage.style.bottom = '-500px';
+}
+
+loggedOutUserButton.addEventListener('click', function() {
+  ga('send', 'event', 'UI', 'Click user button');
+  helloIsOpen ? closeHello() : hello();
 });
 
 
@@ -520,7 +537,12 @@ geoButton.addEventListener('click', function() {
 
 
 map.on('click', function(e) {
-  creditsShowing && hideCredits();
+  if (creditsShowing || welcomeIsOpen || helloIsOpen) {
+    creditsShowing && hideCredits();
+    welcomeIsOpen && closeWelcome();
+    helloIsOpen && closeHello();
+    return;
+  }
   if (isLogging) {
     cancelLog();
     sightingDetails(e);
@@ -576,6 +598,10 @@ credits.addEventListener('click', function() {
 
 welcome.addEventListener('click', function() {
   closeWelcome();
+});
+
+helloCancel.addEventListener('click', function() {
+  closeHello();
 });
 
 window.addEventListener('keydown', function(e) {

@@ -56,7 +56,7 @@
       <div id="messages"></div>
     </div>
 
-    <div id="welcome" class="overlay">
+    <div id="welcome" class="overlay unstick">
       <h2>Find &amp; Share Pokémon!</h2>
       <p>PokéMapper is crowd-sourced Pokémon Go sightings tracker.</p>
       <p>Tap on the map to share your Pokémon sightings with the world!</p>
@@ -67,23 +67,51 @@
       </div>
     </div>
 
-    <button class="center-me fab">
-      ⌖
-    </button>
+    <div id="hello-message" class="overlay unstick">
+      <h2>Thanks for using PokéMapper!</h2>
+      <p>PokéMapper is brought to you by <a id="open-ride-link-hello" title="OpenRide: Long-distance Ridesharing" target="_blank" href="https://openride.co/pokemapper?utm_campaign=poke&utm_source=pokemapper">OpenRide</a>, making travel and adventure easier for people everywhere.</p>
+      <p>Ready to learn more? Sign up to receive fun updates, including soon-to-come rides to collect rare Pokemon across the country.</p>
 
-    <div class="fb-user-position">
-      <button class="login pokebutton circle-button">
-        Log</br>
-        in
+      <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
+      <div id="mc_embed_signup">
+        <form action="//openride.us12.list-manage.com/subscribe/post?u=560a179acbd874c544850db9b&amp;id=fd3577f481" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+          <div id="mc_embed_signup_scroll">
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text" name="b_560a179acbd874c544850db9b_fd3577f481" tabindex="-1" value="">
+            </div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+          </div>
+        </form>
+      </div>
+      <div class="form-row button-row">
+        <button id="hello-cancel" class="pokebutton button-grad circle-button">
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <div id="fabs">
+      <button class="center-me fab">
+        ⌖
       </button>
-      <div class="user">
-        <img />
+      <div class="fb-user-position">
+        <button class="login fab">
+          Me
+        </button>
+        <div class="user">
+          <img />
+        </div>
+        <div id="email-plz" class="center pulse">
+          1
+        </div>
       </div>
     </div>
 
     <div class="fb-like-position">
       <a href="#" id="credits-link">
-        Map credits
+        Who made this?
       </a>
       <div
         class="fb-like"
@@ -295,11 +323,10 @@
       </div>
     </div>
 
-    <div id="credits" class="overlay">
-      <h2>Map credits</h2>
+    <div id="credits" class="overlay unstick">
       <h3>Created with ♥ by</h3>
       <p>
-        <a id="open-ride-link" title="Created by OpenRide" href="https://openride.co/pokemapper?utm_campaign=poke&utm_source=pokemapper">
+        <a id="open-ride-link" title="Created by OpenRide" target="_blank" href="https://openride.co/pokemapper?utm_campaign=poke&utm_source=pokemapper">
           <img alt="OpenRide" src="/openride.svg" height="28" /> OpenRide
         </a>
       </p>
