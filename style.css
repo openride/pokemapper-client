@@ -231,28 +231,38 @@ p {
 }
 
 .fb-like-position {
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   position: absolute;
   bottom: 0;
   right: 0;
 }
 .fb-like-position > a {
-  color: #0a8b9e;
+  color: white;
+  display: inline-block;
+  background: #f90;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: bold;
+  height: 28px;
+  line-height: 28px;
   text-decoration: none;
-  padding: 0 2px;
+  padding: 0 10px;
 }
 .fb-like-position > a > img {
   border: none;
   vertical-align: bottom;
   position: relative;
   margin-right: 5px;
+}
+
+#credits h3 {
+  text-transform: none;
+  font-size: 1em;
+  margin: 2em 0 1em;
+  font-weight: bold;
+}
+
+#open-ride-link img {
+  vertical-align: middle;
 }
 
 .overlay {
