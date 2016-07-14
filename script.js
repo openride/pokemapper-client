@@ -2,6 +2,7 @@ const SERVER = isProd
   ? 'https://data.pokemapper.co'
   : 'http://localhost:3000';
 
+const LIMIT = 6000;
 
 // feature checks
 if (!('geolocation' in navigator)) {
@@ -208,7 +209,7 @@ map.on('load', function() {
 
 
 message('Loading Pokémon...', function(closeMessage) {
-  get('/sightings', function(err, result) {
+  get('/sightings?limit=' + LIMIT, function(err, result) {
     if (err) {
       closeMessage();
       complain('Failed to load sightings :(');
