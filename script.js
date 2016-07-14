@@ -433,24 +433,29 @@ function startFbLogin() {
 }
 
 
+function pokeById(id) {
+  return allPokemon
+    .filter(function(poke) {
+      return poke.id === id;
+    })
+    .map(function(poke) {
+      return poke.name;
+    })[0];
+}
+
+
 function sightingDetails(e) {
   var features = map.queryRenderedFeatures(e.point, { layers: ['sightings'] });
   var pokemon = features[0];
   if (pokemon) {
     popupOpen = true;
     var props = pokemon.properties;
-    ga('send', 'event', 'Sightings', 'View', props._id);
-    var name = allPokemon
-      .filter(function(poke) {
-        return poke.id === props.speciesId;
-      })
-      .map(function(poke) {
-        return poke.name;
-      });
+    var name = pokeById(props.speciesId);
+    ga('send', 'event', 'Sightings', 'View', name);
     return new mapboxgl.Popup()
       .setLngLat(pokemon.geometry.coordinates)
       .setHTML(
-        '<h1>' + name[0] + '</h1>' +
+        '<h1>' + name + '</h1>' +
         '<p><b>type:</b> ' + props.type + '</p>' +
         '<p><b>spotted:</b> ' + new Date(props.date).toLocaleDateString() + ' &ndash; ' + props.timing + '</p>'
       )
@@ -482,9 +487,9 @@ function showSearch() {
 }
 
 function search(id) {
-  ga('send', 'event', 'Sightings', 'Search', id);
   typeFilter = id;
   updateData();
+  ga('send', 'event', 'Sightings', 'Search', id ? pokeById(parseInt(id)) : null);
 }
 
 function hideSearch() {
