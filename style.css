@@ -246,6 +246,7 @@ p {
   line-height: 28px;
   text-decoration: none;
   padding: 0 10px;
+  vertical-align: bottom;
 }
 .fb-like-position > a > img {
   border: none;
