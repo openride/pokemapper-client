@@ -482,6 +482,7 @@ function showSearch() {
 }
 
 function search(id) {
+  ga('send', 'event', 'Sightings', 'Search', id);
   typeFilter = id;
   updateData();
 }
