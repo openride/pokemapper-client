@@ -1,5 +1,5 @@
 function message(t, doStuff) {
-  const m = document.createElement('p');
+  var m = document.createElement('p');
   m.textContent = t;
   DOM.messages.appendChild(m);
   doStuff(function closeMessage() {
