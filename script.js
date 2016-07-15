@@ -199,11 +199,12 @@ message('Waiting for GPS...', function(closeMessage) {
     }, noop, positionOpts);
   });
 });
+
 map.on('load', function() {
   mapHasLoaded = true;
   navigator.geolocation.watchPosition(function(position) {
     myPosition = position;
-    myLocation.setData(positionThing(position));
+    hasPositioned && myLocation.setData(positionThing(position)); // fend off the races, for now...
   }, noop, positionOpts);
 });
 
@@ -249,7 +250,12 @@ message('Loading Pokémon...', function(closeMessage) {
               ['fairy', '#EE99AC'],
             ]
           },
-          'circle-radius': 16,
+          'circle-radius': {
+            "stops": [
+              [5, 10],
+              [10, 16]
+            ]
+          },
           'circle-opacity': 0.667,
         },
       });
