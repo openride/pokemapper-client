@@ -1,5 +1,5 @@
 var SERVER = isProd
-  ? 'https://pokemapper.global.ssl.fastly.net'
+  ? 'https://maps.pokemapper.co'
   : 'http://localhost:3000';
 
 var LIMIT = 6000;
