@@ -471,7 +471,7 @@ function sightingDetails(e) {
     return new mapboxgl.Popup()
       .setLngLat(pokemon.geometry.coordinates)
       .setHTML(
-        '<h1>' + name + '</h1>' +
+        '<h1><img class="pokeicon" alt="icon" src="/icons/' + props.speciesId + '.png" /> ' + name + '</h1>' +
         '<p><b>type:</b> ' + props.type + '</p>' +
         '<p><b>spotted:</b> ' + new Date(props.date).toLocaleDateString() + ' &ndash; ' + props.timing + '</p>'
       )

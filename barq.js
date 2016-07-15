@@ -346,7 +346,7 @@
             // Transforms all the <option> elements in <li> elements.
             // The data-value attribute carries the original <option> value.
             var regex = /<option(?:[^>]*?value="([^"]*?)"|)[^>]*?>(.*?)<\/option>\n?/gi;
-            var li = '<li data-value="$1">$2</li>';
+            var li = '<li data-value="$1"><img alt="icon" src="/icons/$1.png" />$2</li>';
             items = items.replace(regex, li);
 
             return items;
@@ -509,10 +509,10 @@
             if (query !== '') {
                 // Escape some special characters to prevent breaking the dynamic regex
                 query = utils.escapeString(query);
-                matchingRegex = new RegExp('<li[^>]*>[^<]*' + query + '[^<]*<\/li>', 'gi');
+                matchingRegex = new RegExp('<li[^>]*><img[^>]*>[^<]*' + query + '[^<]*<\/li>', 'gi');
             } else {
                 // Matches all list elements by default
-                matchingRegex = /<li[^<]*<\/li>/gi;
+                matchingRegex = /<li[^<]*<[^<]*<\/li>/gi;
             }
 
             var matches = barq.itemsHTML.match(matchingRegex) || [];

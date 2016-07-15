@@ -113,7 +113,7 @@ h1 .img-wrap {
     -ms-flex: 1 1;
         flex: 1 1;
 }
-h1 img {
+h1 .logo {
   width: 100%;
 }
 h2 {
@@ -123,6 +123,10 @@ h2 {
 
 p {
   margin: 0;
+}
+
+.pokeicon {
+  vertical-align: bottom;
 }
 
 .form-row {
