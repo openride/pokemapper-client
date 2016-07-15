@@ -1,5 +1,5 @@
 const SERVER = isProd
-  ? 'https://data.pokemapper.co'
+  ? 'http://data.pokemapper.co'
   : 'http://localhost:3000';
 
 const LIMIT = 6000;
