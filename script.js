@@ -1,5 +1,5 @@
 const SERVER = isProd
-  ? 'https://data.pokemapper.co'
+  ? 'https://pokemapper.global.ssl.fastly.net'
   : 'http://localhost:3000';
 
 const LIMIT = 6000;
