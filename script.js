@@ -39,12 +39,14 @@ function post(url, json, cb) {
 }
 
 
+var dayMap = '/map-day.json';
+var nightMap = '/map-night.json';
+
 // map & controls setup
-mapboxgl.accessToken = 'pk.eyJ1IjoicGhpbG9yIiwiYSI6ImNpcWowcXNhNzA4OWlmb25wNWtleDZteW0ifQ.APZZax09ngrMpErBAcQW5w';
 var map = new mapboxgl.Map({
   attributionControl: false,
   container: 'map',
-  style: 'mapbox://styles/philor/ciqncp8lz000bbjmamqm7i835',
+  style: dayMap,
   zoom: 2,
   center: [-94.4519211, 38.9926981],
 });
