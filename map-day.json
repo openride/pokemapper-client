@@ -86,13 +86,13 @@
   		"composite" : {
   			"type" : "vector",
   			"tiles" : [
-  				"https://maps.global.ssl.fastly.net/data/osm2vectortiles/{z}/{x}/{y}.pbf"
+  				"https://maps.pokemapper.co/data/osm2vectortiles/{z}/{x}/{y}.pbf"
   			],
   			"maxzoom": 14
   			}
   	},
-  	"sprite": "https://maps.global.ssl.fastly.net/styles/bright/sprite",
-  	"glyphs": "https://maps.global.ssl.fastly.net/fonts/{fontstack}/{range}.pbf",
+  	"sprite": "https://maps.pokemapper.co/styles/bright/sprite",
+  	"glyphs": "https://maps.pokemapper.co/fonts/{fontstack}/{range}.pbf",
     "layers": [
         {
             "id": "background",
