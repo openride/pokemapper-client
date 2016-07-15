@@ -4,11 +4,6 @@ const SERVER = isProd
 
 const LIMIT = 6000;
 
-// feature checks
-if (!('geolocation' in navigator)) {
-  alert('Your browser may not support this app, sorry :(');
-}
-
 // ajax utils
 function _ajaxCb(request, cb) {
   request.onload = function() {
@@ -39,19 +34,6 @@ function post(url, json, cb) {
 }
 
 
-var dayMap = '/map-day.json';
-var nightMap = '/map-night.json';
-
-// map & controls setup
-var map = new mapboxgl.Map({
-  attributionControl: false,
-  container: 'map',
-  style: dayMap,
-  zoom: 2,
-  center: [-94.4519211, 38.9926981],
-});
-
-
 var welcome = document.getElementById('welcome');
 
 var helloMessage = document.getElementById('hello-message');
@@ -64,8 +46,6 @@ var logo = document.querySelector('h1 > .img-wrap');
 var searchButton = document.getElementById('search');
 var searchMag = document.querySelector('#search .mag');
 var searchX = document.querySelector('#search .x');
-
-var messages = document.getElementById('messages');
 
 var geoButton = document.querySelector('.center-me');
 
@@ -163,6 +143,13 @@ function positionMe(position) {
 }
 
 
+// https://developer.mozilla.org/en-US/docs/Web/API/PositionError
+var geoErrMsg = {
+  1: 'Permission denied',
+  2: 'Position unavailable',
+  3: 'Timeout',
+};
+
 message('Waiting for GPS...', function(closeMessage) {
   navigator.geolocation.getCurrentPosition(function(position) {
     closeMessage();
@@ -198,16 +185,25 @@ message('Waiting for GPS...', function(closeMessage) {
         },
       });
       positionMe(position);
-    }, noop, positionOpts);
-  });
+    });
+    ga('send', 'event', 'Geolocation', 'GetCurrentPosition', 'Initial');
+    navigator.geolocation.watchPosition(function(position) {
+      myPosition = position;
+      myLocation.setData(positionThing(position)); // fend off the races, for now...
+      ga('send', 'event', 'Geolocation', 'WatchPosition');
+    }, function watchGeoErr(err) {
+      ga('send', 'event', 'Geolocation', 'WatchPosition Error', geoErrMsg[err.code]);
+    }, positionOpts);
+  }, function getGeoErr(err) {
+    positioningFailed = true;
+    closeMessage();
+    complain('Click the targeting button ⌖ to try GPS again');
+    ga('send', 'event', 'Geolocation', 'GetCurrentPosition Error', geoErrMsg[err.code]);
+  }, positionOpts);
 });
 
 map.on('load', function() {
   mapHasLoaded = true;
-  navigator.geolocation.watchPosition(function(position) {
-    myPosition = position;
-    hasPositioned && myLocation.setData(positionThing(position)); // fend off the races, for now...
-  }, noop, positionOpts);
 });
 
 
@@ -284,6 +280,7 @@ var prevZoom = 16;
 var selectedLngLat = null;
 
 var hasPositioned = false;
+var positioningFailed = false;
 var myPosition = null;
 var myLocation = null;
 var sightingsData = null;
@@ -310,30 +307,6 @@ function updateData() {
     filtered = sightingsData;
   }
   filteredData.setData(filtered);
-}
-
-
-function message(t, doStuff) {
-  const m = document.createElement('p');
-  m.textContent = t;
-  messages.appendChild(m);
-  doStuff(function closeMessage() {
-    messages.removeChild(m);
-  });
-}
-
-
-function complain(msg) {
-  message(msg, function(closeMessage) {
-    setTimeout(closeMessage, 3000);
-  });
-}
-
-
-function woo(msg) {
-  message(msg, function(closeMessage) {
-    setTimeout(closeMessage, 1500);
-  });
 }
 
 
@@ -544,7 +517,11 @@ entryLoginButton.addEventListener('click', function() {
 
 
 geoButton.addEventListener('click', function() {
-  hasPositioned && mapHasLoaded && positionMe(myPosition);
+  if (positioningFailed) {
+
+  } else {
+    hasPositioned && positionMe(myPosition);
+  }
 });
 
 
@@ -582,6 +559,13 @@ entryForm.addEventListener('submit', function(e) {
   e.preventDefault();
   save();
 });
+
+function _updateDayNight() {
+  var val = document.querySelector('input[name="daynight"]:checked').value;
+  mapC.setDayNight(val);
+}
+DOM.daynightDay.addEventListener('change', _updateDayNight);
+DOM.daynightNight.addEventListener('change', _updateDayNight);
 
 entryCancel.addEventListener('click', function(e) {
   e.preventDefault();
