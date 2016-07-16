@@ -3,6 +3,7 @@
   ga('send', 'event', 'Geolocation', 'Support', geoSupport ? 'Supported' : 'Not supported');
 
   !mapboxgl.supported() && complain('Sorry, your browser can not draw this map');
+  ga('send', 'event', 'WebGL', 'Support', mapboxgl.supported() ? 'Supported' : 'Not supported');
 
   var DAY = '/map-day.json';
   var NIGHT = '/map-night.json';
