@@ -189,7 +189,7 @@ message('Waiting for GPS...', function(closeMessage) {
     ga('send', 'event', 'Geolocation', 'GetCurrentPosition', 'Initial');
     navigator.geolocation.watchPosition(function(position) {
       myPosition = position;
-      myLocation.setData(positionThing(position)); // fend off the races, for now...
+      hasPositioned && myLocation.setData(positionThing(position)); // fend off the races, for now...
       ga('send', 'event', 'Geolocation', 'WatchPosition');
     }, function watchGeoErr(err) {
       ga('send', 'event', 'Geolocation', 'WatchPosition Error', geoErrMsg[err.code]);
