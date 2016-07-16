@@ -104,6 +104,7 @@
     message('Loading map...', function(closeMessage) {
       map.once('style.load', closeMessage);
     });
+    ga('send', 'event', 'Sightings form', 'Day/night toggle', style);
   }
 
   function getPok(e) {

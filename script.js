@@ -87,7 +87,6 @@ var creditsShowing = false;
 
 // spaghetti
 function login(me) {
-  ga('send', 'event', 'Account', 'Log in', me.id);
   isLoggedIn = true;
   fbId = me.id;
   fbName = me.first_name;
@@ -96,11 +95,11 @@ function login(me) {
   userImg.src = 'https://graph.facebook.com/v2.5/' + fbId + '/picture?height=60&width=60';
   entryLogin.style.display = 'none';
   entryForm.classList.remove('visuallyhidden');
+  ga('send', 'event', 'Account', 'Log in', me.id);
 }
 
 
 function log(lngLat) {
-  ga('send', 'event', 'Sightings', 'Begin entry');
   isLogging = true;
   selectedLngLat = lngLat;
   prevZoom = map.getZoom();
@@ -108,6 +107,7 @@ function log(lngLat) {
   mapC.addTemporaryPoint(lngLat);
   entry.style.bottom = '0';
   picker.setDate(new Date());
+  ga('send', 'event', 'Sightings', 'Begin entry');
 }
 
 
@@ -236,14 +236,14 @@ function closeHello() {
 }
 
 userButton.addEventListener('click', function() {
-  ga('send', 'event', 'UI', 'Click user button');
   helloIsOpen ? closeHello() : hello();
+  ga('send', 'event', 'UI', 'Click user button');
 });
 
 
 entryLoginButton.addEventListener('click', function() {
-  ga('send', 'event', 'Accounts', 'Click log in', 'Entry popup');
   startFbLogin();
+  ga('send', 'event', 'Accounts', 'Click log in', 'Entry popup');
 });
 
 
@@ -300,8 +300,8 @@ welcome.addEventListener('click', function() {
 });
 
 helloForm.addEventListener('submit', function() {
-  ga('send', 'event', 'Email', 'Subscribe');
   closeHello();
+  ga('send', 'event', 'Email', 'Subscribe');
 });
 
 helloCancel.addEventListener('click', function() {
