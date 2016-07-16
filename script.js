@@ -2,7 +2,7 @@ var SERVER = isProd
   ? 'https://pokemapper.global.ssl.fastly.net'
   : 'http://localhost:3000';
 
-var LIMIT = 6000;
+var LIMIT = 10000;
 
 // ajax utils
 function _ajaxCb(request, cb) {
