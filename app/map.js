@@ -39,6 +39,7 @@
   });
 
   message('Loading Pokémon sightings...', function(closeMessage) {
+    var t0 = new Date();
     ajax.get('/sightings?limit=' + SIGHTINGS_LIMIT, function(err, response) {
       closeMessage();
       if (err) {
@@ -47,7 +48,7 @@
       } else {
         sightings = JSON.parse(response);
         loaded ? addDataLayer() : map.once('load', addDataLayer);
-        ga('send', 'event', 'Sightings', 'Load', 'Most recent', SIGHTINGS_LIMIT);
+        ga('send', 'event', 'Sightings', 'Load', 'Most recent', new Date() - t0);
       }
     });
   });
