@@ -1,39 +1,3 @@
-var SERVER = isProd
-  ? 'https://pokemapper.global.ssl.fastly.net'
-  : 'http://localhost:3000';
-
-var LIMIT = 10000;
-
-// ajax utils
-function _ajaxCb(request, cb) {
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400) {
-      cb(null, request.responseText);
-    } else {
-      cb(new Error('Server error'));
-    }
-  };
-  request.onerror = function() {
-    cb(new Error('Connection error'));
-  };
-}
-function get(url, cb) {
-  var request = new XMLHttpRequest();
-  _ajaxCb(request, function(err, responseText) {
-    err ? cb(err) : cb(null, JSON.parse(responseText));
-  });
-  request.open('GET', `${SERVER}${url}`, true);
-  request.send();
-}
-function post(url, json, cb) {
-  var request = new XMLHttpRequest();
-  _ajaxCb(request, cb);
-  request.open('POST', `${SERVER}${url}`, true);
-  request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  request.send(JSON.stringify(json));
-}
-
-
 var welcome = document.getElementById('welcome');
 
 var helloMessage = document.getElementById('hello-message');
@@ -68,13 +32,13 @@ var barqOpts = {
   enablePagination: false,
   removeFirstOptionFromSearch: true,
   useFirstOptionTextAsPlaceholder: false,
-  placeholderText: 'Enter Species',
-  noResultsMessage: 'No Pokemon found',
+  placeholderText: 'Enter Pokémon name',
+  noResultsMessage: 'No Pokémon found',
 };
 var entrySelectBarq = new Barq(entrySelect, barqOpts).init();
 var searchSelectBarq = new Barq(searchSelect, Object.assign({}, barqOpts, {
   onchange: function barqHandler() {
-    search(this.value);
+    mapC.filterPoke(this.value);
   },
 })).init();
 var entryDatepiker = document.getElementById('datepicker');
@@ -89,179 +53,6 @@ var entryCancel = document.getElementById('entry-cancel');
 var creditsLink = document.getElementById('credits-link');
 var credits = document.getElementById('credits');
 var openRideLink = document.getElementById('open-ride-link');
-
-function noop() {}
-
-var positionOpts = { enableHighAccuracy: true };
-
-
-function positionThing(position) {
-  return {
-    type: 'FeatureCollection',
-    features: [
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            position.coords.longitude,
-            position.coords.latitude,
-          ],
-        },
-        properties: {
-          role: 'outline'
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            position.coords.longitude,
-            position.coords.latitude,
-          ],
-        },
-        properties: {
-          role: 'fill'
-        }
-      },
-    ]
-  };
-}
-
-
-function positionMe(position) {
-  map.flyTo({
-    center: {
-      lng: position.coords.longitude,
-      lat: position.coords.latitude,
-    },
-    pitch: 20,
-    zoom: 16,
-    bearing: 0
-  });
-}
-
-
-// https://developer.mozilla.org/en-US/docs/Web/API/PositionError
-var geoErrMsg = {
-  1: 'Permission denied',
-  2: 'Position unavailable',
-  3: 'Timeout',
-};
-
-message('Waiting for GPS...', function(closeMessage) {
-  navigator.geolocation.getCurrentPosition(function(position) {
-    closeMessage();
-    map.on('load', function() {
-      hasPositioned = true;
-      myPosition = position;
-      myLocation = new mapboxgl.GeoJSONSource({
-        data: positionThing(position)
-      });
-      map.addSource('myLocation', myLocation);
-      map.addLayer({
-        id: 'myLocation',
-        source: 'myLocation',
-        type: 'circle',
-        paint: {
-          'circle-color': {
-            property: 'role',
-            type: 'categorical',
-            stops: [
-              ['outline', '#fff'],
-              ['fill', '#24f'],
-            ],
-          },
-          'circle-radius': {
-            property: 'role',
-            type: 'categorical',
-            stops: [
-              ['outline', 12],
-              ['fill', 9],
-            ],
-          },
-          'circle-opacity': 1,
-        },
-      });
-      positionMe(position);
-    });
-    ga('send', 'event', 'Geolocation', 'GetCurrentPosition', 'Initial');
-    navigator.geolocation.watchPosition(function(position) {
-      myPosition = position;
-      hasPositioned && myLocation.setData(positionThing(position)); // fend off the races, for now...
-      ga('send', 'event', 'Geolocation', 'WatchPosition');
-    }, function watchGeoErr(err) {
-      ga('send', 'event', 'Geolocation', 'WatchPosition Error', geoErrMsg[err.code]);
-    }, positionOpts);
-  }, function getGeoErr(err) {
-    positioningFailed = true;
-    closeMessage();
-    complain('Click the targeting button ⌖ to try GPS again');
-    ga('send', 'event', 'Geolocation', 'GetCurrentPosition Error', geoErrMsg[err.code]);
-  }, positionOpts);
-});
-
-map.on('load', function() {
-  mapHasLoaded = true;
-});
-
-
-message('Loading Pokémon...', function(closeMessage) {
-  get('/sightings?limit=' + LIMIT, function(err, result) {
-    if (err) {
-      closeMessage();
-      complain('Failed to load sightings :(');
-      console.error(err);
-      return;
-    }
-    map.on('load', function() {
-      sightingsData = result;
-      updateData();
-      map.addSource('sightings', filteredData);
-      map.addLayer({
-        id: 'sightings',
-        source: 'sightings',
-        type: 'circle',
-        paint: {
-          'circle-color': {
-            property: 'type',
-            type: 'categorical',
-            stops: [
-              ['normal', '#A8A878'],
-              ['fighting', '#C03028'],
-              ['flying', '#A890F0'],
-              ['poison', '#A040A0'],
-              ['ground', '#E0C068'],
-              ['gock', '#B8A038'],
-              ['bug', '#A8B820'],
-              ['ghost', '#705898'],
-              ['steel', '#B8B8D0'],
-              ['fire', '#F08030'],
-              ['water', '#6890F0'],
-              ['grass', '#78C850'],
-              ['electric', '#F8D030'],
-              ['psychic', '#F85888'],
-              ['ice', '#98D8D8'],
-              ['dragon', '#7038F8'],
-              ['dark', '#705848'],
-              ['fairy', '#EE99AC'],
-            ]
-          },
-          'circle-radius': {
-            "stops": [
-              [5, 10],
-              [10, 16]
-            ]
-          },
-          'circle-opacity': 0.667,
-        },
-      });
-      closeMessage();
-    });
-  });
-});
-
 
 // awful global state stuff
 var isLoggedIn = false;
@@ -294,22 +85,6 @@ var popupOpen = false;
 var creditsShowing = false;
 
 
-function updateData() {
-  var filtered;
-  var speciesId = parseInt(typeFilter);
-  if (typeFilter) {
-    filtered = Object.assign({}, sightingsData, {
-      features: sightingsData.features.filter(function(feature) {
-        return feature.properties.speciesId === speciesId;
-      }),
-    });
-  } else {
-    filtered = sightingsData;
-  }
-  filteredData.setData(filtered);
-}
-
-
 // spaghetti
 function login(me) {
   ga('send', 'event', 'Account', 'Log in', me.id);
@@ -329,27 +104,8 @@ function log(lngLat) {
   isLogging = true;
   selectedLngLat = lngLat;
   prevZoom = map.getZoom();
-  map.addSource('blah', {
-    type: 'geojson',
-    data: {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [lngLat.lng, lngLat.lat],
-      },
-    },
-  });
-  map.addLayer({
-    id: 'blah',
-    source: 'blah',
-    type: 'circle',
-    paint: {
-      'circle-color': '#009b91',
-      'circle-radius': 32,
-      'circle-opacity': 0.5,
-    },
-  })
-  map.flyTo({ center: lngLat, zoom: 18, pitch: 60 });
+  map.flyTo({ center: lngLat, zoom: prevZoom + 1, pitch: 60 });
+  mapC.addTemporaryPoint(lngLat);
   entry.style.bottom = '0';
   picker.setDate(new Date());
 }
@@ -371,7 +127,7 @@ function save() {
   var daynight = document.querySelector('input[name="daynight"]:checked').value;
   isSaving = true;
   message('Saving...', function(closeMessage) {
-    post('/sightings', {
+    ajax.post('/sightings', {
       fbId: fbId,
       speciesId: entrySelectBarq.value,
       date: picker.getDate(),
@@ -386,8 +142,7 @@ function save() {
       } else {
         woo('Saved.');
         cancelLog();
-        sightingsData.features.push(JSON.parse(result));
-        updateData();
+        mapC.addSessionSighting(JSON.parse(result));
       }
     });
   });
@@ -402,9 +157,8 @@ function cancelLog() {
   entryError.style.display = 'none';
   entrySelectBarq.clear();
   entrySave.classList.add('button-grad');
-  map.flyTo({ zoom: prevZoom, pitch: 30 });
-  map.removeLayer('blah');
-  map.removeSource('blah');
+  map.flyTo({ zoom: prevZoom, pitch: 0 });
+  mapC.clearTemporaryPoint();
 }
 
 
@@ -435,25 +189,6 @@ function pokeById(id) {
 }
 
 
-function sightingDetails(e) {
-  var features = map.queryRenderedFeatures(e.point, { layers: ['sightings'] });
-  var pokemon = features[0];
-  if (pokemon) {
-    popupOpen = true;
-    var props = pokemon.properties;
-    var name = pokeById(props.speciesId);
-    ga('send', 'event', 'Sightings', 'View', name);
-    return new mapboxgl.Popup()
-      .setLngLat(pokemon.geometry.coordinates)
-      .setHTML(
-        '<h1><img class="pokeicon" alt="icon" src="/icons/' + props.speciesId + '.png" /> ' + name + '</h1>' +
-        '<p><b>type:</b> ' + props.type + '</p>' +
-        '<p><b>spotted:</b> ' + new Date(props.date).toLocaleDateString() + ' &ndash; ' + props.timing + '</p>'
-      )
-      .addTo(map);
-  }
-}
-
 function hideCredits() {
   // should set a global var?
   credits.style.display = 'none';
@@ -465,21 +200,17 @@ function closeWelcome() {
 }
 
 function showSearch() {
-  function doit() {
-    ga('send', 'event', 'UI', 'Open Search');
-    searchIsShowing = true;
-    logo.style.display = 'none';
-    searchMag.style.display = 'none';
-    searchWrap.style.display = 'block';
-    searchX.style.display = 'block';
-    searchSelectBarq.focus();
-  }
-  mapHasLoaded ? doit() : map.on('load', doit);
+  ga('send', 'event', 'UI', 'Open Search');
+  searchIsShowing = true;
+  logo.style.display = 'none';
+  searchMag.style.display = 'none';
+  searchWrap.style.display = 'block';
+  searchX.style.display = 'block';
+  searchSelectBarq.focus();
 }
 
 function search(id) {
   typeFilter = id;
-  updateData();
   ga('send', 'event', 'Sightings', 'Search', id ? pokeById(parseInt(id)) : null);
 }
 
@@ -516,32 +247,7 @@ entryLoginButton.addEventListener('click', function() {
 });
 
 
-geoButton.addEventListener('click', function() {
-  if (positioningFailed) {
-
-  } else {
-    hasPositioned && positionMe(myPosition);
-  }
-});
-
-
-map.on('click', function(e) {
-  if (creditsShowing || welcomeIsOpen || helloIsOpen) {
-    creditsShowing && hideCredits();
-    welcomeIsOpen && closeWelcome();
-    helloIsOpen && closeHello();
-    return;
-  }
-  if (isLogging) {
-    cancelLog();
-    sightingDetails(e);
-  } else {
-    if (!sightingDetails(e)) {
-      !popupOpen && log(e.lngLat);
-      popupOpen = false;
-    }
-  }
-});
+geoButton.addEventListener('click', mapC.positionMe);
 
 
 map.on('mousemove', function(e) {

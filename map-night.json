@@ -6345,7 +6345,7 @@
             "layout": {
                 "text-field": "{name_en}",
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "symbol-placement": "line",
                 "text-max-angle": 30,
@@ -6417,7 +6417,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 1,
                 "text-offset": [
@@ -6483,7 +6483,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -6565,7 +6565,7 @@
                 "text-max-angle": 30,
                 "symbol-spacing": 500,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "symbol-placement": "line",
                 "text-padding": 1,
@@ -6624,7 +6624,7 @@
                 "text-max-angle": 30,
                 "symbol-spacing": 500,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "symbol-placement": "line",
                 "text-padding": 1,
@@ -6675,7 +6675,7 @@
                 "text-max-angle": 30,
                 "symbol-spacing": 400,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "symbol-placement": "line",
                 "text-padding": 1,
@@ -6738,7 +6738,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -6804,7 +6804,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -6852,7 +6852,7 @@
             "layout": {
                 "text-field": "{name_en}",
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-max-width": 7,
                 "text-size": {
@@ -6922,7 +6922,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -7000,7 +7000,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -7059,7 +7059,7 @@
                 },
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -7121,7 +7121,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -7158,7 +7158,7 @@
                 "text-letter-spacing": 0.1,
                 "text-max-width": 7,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 3,
                 "text-size": {
@@ -7199,7 +7199,7 @@
                 "text-field": "{name_en}",
                 "text-transform": "uppercase",
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-letter-spacing": 0.15,
                 "text-max-width": 7,
@@ -7241,7 +7241,7 @@
             "layout": {
                 "text-field": "{name_en}",
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 1,
@@ -7280,7 +7280,7 @@
             "layout": {
                 "text-field": "{name_en}",
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-max-width": 7,
                 "text-size": {
@@ -7349,13 +7349,13 @@
                         [
                             11,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ],
                         [
                             12,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ]
                     ]
@@ -7430,7 +7430,7 @@
                 "text-max-angle": 38,
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-padding": 2,
                 "text-offset": [
@@ -7496,13 +7496,13 @@
                         [
                             7,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ],
                         [
                             8,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ]
                     ]
@@ -7608,13 +7608,13 @@
                         [
                             7,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ],
                         [
                             8,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ]
                     ]
@@ -7694,13 +7694,13 @@
                         [
                             7,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ],
                         [
                             8,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ]
                     ]
@@ -7789,13 +7789,13 @@
                         [
                             7,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ],
                         [
                             8,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ]
                     ]
@@ -7920,13 +7920,13 @@
                         [
                             7,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ],
                         [
                             8,
                             [
-                              "Open Sans"
+                              "Open Sans Semibold"
                             ]
                         ]
                     ]
@@ -8065,7 +8065,7 @@
                     ]
                 },
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "symbol-placement": "line",
                 "text-field": "{name_en}",
@@ -8108,7 +8108,7 @@
                 "text-letter-spacing": 0.1,
                 "text-line-height": 1.5,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 1,
@@ -8172,7 +8172,7 @@
                 },
                 "symbol-spacing": 250,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "symbol-placement": "line",
                 "text-field": "{name_en}",
@@ -8216,7 +8216,7 @@
                 "text-letter-spacing": 0.15,
                 "text-line-height": 1.5,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 1.1,
@@ -8269,7 +8269,7 @@
                 "text-line-height": 1.1,
                 "symbol-placement": "line",
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 1,
@@ -8321,7 +8321,7 @@
                 "text-letter-spacing": 0.25,
                 "text-line-height": 1.5,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 1,
@@ -8375,8 +8375,7 @@
                 },
                 "text-transform": "uppercase",
                 "text-font": [
-                    "DIN Offc Pro Bold",
-                    "Arial Unicode MS Bold"
+                  "Open Sans Bold"
                 ],
                 "text-field": {
                     "base": 1,
@@ -8442,8 +8441,7 @@
                 },
                 "text-transform": "uppercase",
                 "text-font": [
-                    "DIN Offc Pro Bold",
-                    "Arial Unicode MS Bold"
+                  "Open Sans Bold"
                 ],
                 "text-field": {
                     "base": 1,
@@ -8501,8 +8499,7 @@
                 },
                 "text-transform": "uppercase",
                 "text-font": [
-                    "DIN Offc Pro Bold",
-                    "Arial Unicode MS Bold"
+                  "Open Sans Bold"
                 ],
                 "text-padding": 1,
                 "text-field": {
@@ -8549,7 +8546,7 @@
                 "text-field": "{name_en}",
                 "text-max-width": 6,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 0.9,
@@ -8605,7 +8602,7 @@
                 },
                 "text-max-width": 6,
                 "text-font": [
-                  "Open Sans"
+                  "Open Sans Semibold"
                 ],
                 "text-size": {
                     "base": 1,

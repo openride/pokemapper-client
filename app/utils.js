@@ -1,9 +1,15 @@
 function message(t, doStuff) {
   var m = document.createElement('p');
+  var removed = false;
   m.textContent = t;
   DOM.messages.appendChild(m);
   doStuff(function closeMessage() {
-    DOM.messages.removeChild(m);
+    if (removed) {
+      console.error('Already removed node for child', m);
+    } else {
+      DOM.messages.removeChild(m);
+      removed = true;
+    }
   });
 }
 
