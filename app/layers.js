@@ -30,11 +30,12 @@ function getSightingsLayer(id, source) {
       },
       'circle-radius': {
         "stops": [
-          [5, 10],
-          [10, 16]
-        ]
+          [1, 4],
+          [16, 16]
+        ],
+        base: 1,
       },
-      'circle-opacity': 0.667,
+      'circle-opacity': 0.7,
     },
   };
 }
