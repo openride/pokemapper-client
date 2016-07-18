@@ -13,7 +13,7 @@
   function getRoute() {
     var nohash = window.location.hash.slice(1);
     var parts = nohash.split('?');
-    var path = parts[0] || '#/';
+    var path = parts[0] || '/';
     var querystring = parts[1];
     var query = {};
     querystring && querystring.split('&').forEach(function(bit) {
