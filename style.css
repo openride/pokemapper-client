@@ -66,6 +66,11 @@ body {
   padding-right: 3%;
   line-height: 1.4;
 }
+
+#hello-message img {
+  width: 100%;
+}
+
 div#mc_embed_signup input.email {
   display: inline-block;
   margin: 0;
