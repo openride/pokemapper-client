@@ -22,7 +22,8 @@
   // State
 
   var loaded = false;
-  var sightings = null;
+  var selectedLayer = null;
+  var sightings = { type: 'FeatureCollection', features: [] };
   var userSightings = { type: 'FeatureCollection', features: [] };
   var newSighting = { type: 'FeatureCollection', features: [] };
   var medot = { type: 'FeatureCollection', features: [] };
@@ -39,45 +40,33 @@
     center: [-94.4519211, 38.9926981],
   });
 
-  message('Loading Pokémon sightings...', function(closeMessage) {
-    var t0 = new Date();
-    ajax.get('/sightings?limit=' + SIGHTINGS_LIMIT, function(err, response) {
-      closeMessage();
-      if (err) {
-        complain('Could not load Pokémon sightings, sorry!');
-        ga('send', 'event', 'Error', 'Failed to load sightings', String(err));
-      } else {
-        sightings = JSON.parse(response);
-        loaded ? addDataLayer() : map.once('load', addDataLayer);
-        ga('send', 'event', 'Sightings', 'Load', 'Most recent', new Date() - t0);
-      }
-    });
-  });
-
   // Helpers
 
-  function addDataLayer() {
-    if (map.getSource('sightings')) return;
-    map.addSource('sightings', {
-      type: 'geojson',
-      data: sightings,
-    });
-    map.addSource('newSighting', {
-      type: 'geojson',
-      data: newSighting,
-    });
-    map.addSource('medot', {
-      type: 'geojson',
-      data: medot,
-    });
-    map.addSource('userSightings', {
-      type: 'geojson',
-      data: userSightings
-    });
-    map.addLayer(getSightingsLayer('sightings', 'sightings'));
-    map.addLayer(getNewSightingLayer('newSighting', 'newSighting'));
-    map.addLayer(getMedotLayer('medot', 'medot'));
-    map.addLayer(getSightingsLayer('userSightings', 'userSightings'))
+  function _addLayer(id, geojson, layerSpec, visible) {
+    if (!geojson) return;
+    map.getSource(id)
+      ? map.getSource(id).setData(geojson)
+      : map.addSource(id, { type: 'geojson', data: geojson });
+    map.getLayer(id)
+      ? null
+      : map.addLayer(layerSpec);
+    map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
+  }
+
+  var addDataLayer = window.adl = function addDataLayer() {
+    _addLayer('sightings', sightings,
+      getSightingsLayer('sightings', 'sightings'),
+      selectedLayer === 'sightings');
+
+    _addLayer('userSightings', userSightings,
+      getSightingsLayer('userSightings', 'userSightings'),
+      selectedLayer === 'userSightings');
+
+    _addLayer('newSighting', newSighting,
+      getNewSightingLayer('newSighting', 'newSighting'), true);
+
+    _addLayer('medot', medot,
+      getMedotLayer('medot', 'medot'), true);
   }
 
   function mapReadyQueue(fn) {
@@ -150,48 +139,80 @@
         coordinates: [lngLat.lng, lngLat.lat],
       },
     }];
-    map.getSource('newSighting').setData(newSighting);
+    addDataLayer();
   }
 
   function clearTemporaryPoint(lngLat) {
     newSighting.features = [];
-    map.getSource('newSighting').setData(newSighting);
+    addDataLayer();
   }
 
   function addSessionSighting(feature) {
     sightings.features.push(feature);
-    map.getSource('sightings').setData(sightings);
+    userSightings.features.push(feature);
+    addDataLayer();
   }
 
-  var toggleUserMap = function() {
-    if (map.getLayoutProperty('sightings', 'visibility') !== 'none') {
-      map.setLayoutProperty('sightings', 'visibility', 'none');
-    } else {
-      map.setLayoutProperty('sightings', 'visibility', 'visible');
-    }
-  }
-
-  var updatePosition = function(position) {
+  function updatePosition(position) {
     medot = positionThing(position);
-    var source = map.getSource('medot');
-    source && source.setData(medot);
+    addDataLayer();
   }
 
-  var loadUserMap = function(uuid) {
+  function loadGlobalMap() {
+    selectedLayer = 'sightings';
+    message('Loading Pokémon sightings...', function(closeMessage) {
+      var t0 = new Date();
+      ajax.get('/sightings?limit=' + SIGHTINGS_LIMIT, function(err, response) {
+        closeMessage();
+        if (err) {
+          complain('Could not load Pokémon sightings, sorry!');
+          ga('send', 'event', 'Error', 'Failed to load sightings', String(err));
+        } else {
+          sightings = JSON.parse(response);
+          loaded ? addDataLayer() : map.once('load', addDataLayer);
+          ga('send', 'event', 'Sightings', 'Load', 'Most recent', new Date() - t0);
+        }
+      });
+    });
+  }
+
+  function loadUserMap(uuid) {
+    selectedLayer = 'userSightings';
     message('Loading ze Pokemen...', function(closeMessage) {
       var t0 = new Date();
       ajax.get('/sightings?author_id=' + uuid, function(err, response) {
-        var temp = JSON.parse(response);
         closeMessage();
+        var temp = JSON.parse(response);
         if (err) {
-          complain('Error loading user\'s sightings. Sorry!');
+          complain('Could not load Pokémon sightings, sorry!');
           ga('send', 'event', 'Error', 'Failed to load user sightings', String(err));
         } else if (temp.features.length === 0) {
-          complain('No sightings found for the selected user.');
+          woo('No sightings yet!');
         } else {
-          var source = map.getSource('userSightings');
-          source && source.setData(temp);
-          source && toggleUserMap();
+          userSightings = JSON.parse(response);
+          var west = Infinity;
+          var east = -Infinity;
+          var north = -Infinity;
+          var south = Infinity;
+          userSightings.features.forEach(function(feature) {
+            var lngLat = feature.geometry.coordinates;
+            // WARNING: clusters spanning the -180 - 180 longitude will contain the whole world
+            west = Math.min(lngLat[0], west);
+            east = Math.max(lngLat[0], east);
+            north = Math.max(lngLat[1], north);
+            south = Math.min(lngLat[1], south);
+          });
+          function _draw() {
+            addDataLayer();
+            if (east > west &&
+                north > south) {
+              map.fitBounds([[west, south], [east, north]], {
+                padding: 30,
+                maxZoom: 11,
+              });
+            }
+          }
+          loaded ? _draw() : map.once('load', _draw);
           ga('send', 'event', 'Sightings', 'Load', 'User sightings', new Date() - t0);
         }
       });
@@ -223,10 +244,7 @@
         positioned || closeMessage();
         geo = 'ready';
         loaded && updatePosition(position);
-        if (!positioned) {
-          positionMe();
-          positioned = true;
-        }
+        positioned = true;
       }, function watchGeoErr(err) {
         positioned || closeMessage();
         positioned = true;
@@ -237,16 +255,14 @@
     });
   });
 
-  map.on('style.load', function() {
-    if (sightings) addDataLayer();
-  });
+  map.on('style.load', addDataLayer);
 
   map.on('click', function(e) {
     if (isLogging) return cancelLog();
     if (popup) return closePopup();
     var pokeHere = getPok(e);
     if (pokeHere) return showPok(pokeHere);
-    if (map.getZoom() < 11) return complain('Zoom in to add your Pokémon sighting ');
+    if (map.getZoom() < 11) return complain('Zoom in to add your Pokémon sighting');
     startLog(e.lngLat);
   });
 
@@ -260,6 +276,6 @@
     addSessionSighting: mapReadyQueue(addSessionSighting),
     positionMe: positionMe,
     loadUserMap: loadUserMap,
-    toggleUserMap: toggleUserMap
+    loadGlobalMap: loadGlobalMap,
   };
 })();

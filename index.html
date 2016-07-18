@@ -40,6 +40,11 @@
        }(document, 'script', 'facebook-jssdk'));
     </script>
 
+    <div class="tabs">
+      <a href="#/" id="global-map-tab" class="selected" role="button">Global</a>
+      <a href="#/my-map" id="my-map-tab" role="button">My Map</a>
+    </div>
+
     <div id='map'></div>
 
     <div id="top">
@@ -335,6 +340,15 @@
           <button id="entry-login-button" class="pokebutton button-grad">Log in</button>
         </p>
       </div>
+      <div id="mymap-login" class="log-in">
+        <h2>View your map</h2>
+        <p>Log in to save and view all your Pokemon Go sightings</p>
+        <p>
+          <button id="mymap-login-button" class="pokebutton button-grad">Log in</button>
+        </p>
+      </div>
+
+      </div>
       <div class="form-row button-row">
         <button id="entry-cancel" class="pokebutton button-grad circle-button">
           &times;
@@ -373,7 +387,6 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-68070301-3', 'auto');
-      ga('send', 'pageview');
     </script>
     <script src="/pikaday.js"></script>
     <script src="/barq.js"></script>
@@ -386,5 +399,6 @@
     <script src="/app/pok-info.js"></script>
     <script src="/app/map.js"></script>
     <script src="/script.js"></script>
+    <script src="/app/tabs.js"></script>
   </body>
 </html>

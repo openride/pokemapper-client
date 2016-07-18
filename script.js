@@ -89,20 +89,30 @@ var creditsShowing = false;
 
 
 // spaghetti
-function login(me) {
+function login(me, cb) {
   isLoggedIn = true;
   fbId = me.id;
   fbName = me.first_name;
   loggedOutUserButton.style.display = 'none';
+  // superhack
+  document.getElementById('mymap-login').style.display = 'none';
   user.style.display = 'block';
   userImg.src = 'https://graph.facebook.com/v2.5/' + fbId + '/picture?height=60&width=60';
   entryLogin.style.display = 'none';
   entryForm.classList.remove('visuallyhidden');
+  ajax.get('/uuids/' + me.id, function(err, response) {
+    var uuid = JSON.parse(response).uuid;
+    tabs.setUuid(uuid);
+    cb && cb(uuid);
+  });
   ga('send', 'event', 'Account', 'Log in', me.id);
 }
 
 
 function log(lngLat) {
+  if (!isLoggedIn) {
+    entryLogin.style.display = 'block';
+  }
   isLogging = true;
   selectedLngLat = lngLat;
   prevZoom = map.getZoom();
@@ -166,14 +176,14 @@ function cancelLog() {
 
 
 // wiriting it all up
-function startFbLogin() {
+function startFbLogin(cb) {
   message('Logging in...', function(closeMessage) {
     FB.login(function(res) {
       if (res.status === 'connected') {
         FB.api('/me', { fields: 'first_name' }, function(response) {
           closeMessage();
           woo('Hi, ' + response.first_name + '!');
-          login(response);
+          login(response, cb);
         });
       }
     });
@@ -195,6 +205,10 @@ function pokeById(id) {
 function hideCredits() {
   // should set a global var?
   credits.style.display = 'none';
+}
+
+function showWelcome() {
+  welcome.classList.add('open');
 }
 
 function closeWelcome() {
