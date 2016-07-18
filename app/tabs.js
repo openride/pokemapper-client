@@ -35,6 +35,7 @@
       mapC.loadGlobalMap();
       showWelcome();
     } else if (route.path === '/my-map') {
+      closeWelcome();
       myTab.classList.add('selected');
       // TODO: handle no querystring
       if (!route.query.id) {
