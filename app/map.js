@@ -178,7 +178,7 @@
 
   function loadUserMap(uuid) {
     selectedLayer = 'userSightings';
-    message('Loading ze Pokemen...', function(closeMessage) {
+    message('Loading my Pokémon sightings...', function(closeMessage) {
       var t0 = new Date();
       ajax.get('/sightings?author_id=' + uuid, function(err, response) {
         closeMessage();
