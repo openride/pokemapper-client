@@ -21,6 +21,9 @@ var userImg = document.querySelector('.user img');
 var entryLogin = document.getElementById('entry-login');
 var entryLoginButton = document.getElementById('entry-login-button');
 
+var teepublicLink1 = document.getElementById('teepublic-link-1');
+var teepublicLink2 = document.getElementById('teepublic-link-2');
+
 var entry = document.getElementById('entry');
 var entryForm = document.getElementById('entry-form');
 var entryError = document.getElementById('entry-error');
@@ -289,6 +292,14 @@ openRideLink.addEventListener('click', function(e) {
 });
 openRideHelloLink.addEventListener('click', function(e) {
   ga('send', 'event', 'Outbound', 'Click', 'Mailing list signup');
+});
+
+teepublicLink1.addEventListener('click', function(e) {
+  ga('send', 'event', 'Advert', 'Click', 'Teepublic 1');
+});
+
+teepublicLink2.addEventListener('click', function(e) {
+  ga('send', 'event', 'Advert', 'Click', 'Teepublic 2');
 });
 
 credits.addEventListener('click', function() {
