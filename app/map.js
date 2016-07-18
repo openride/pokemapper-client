@@ -23,6 +23,7 @@
 
   var loaded = false;
   var sightings = null;
+  var userSightings = { type: 'FeatureCollection', features: [] };
   var newSighting = { type: 'FeatureCollection', features: [] };
   var medot = { type: 'FeatureCollection', features: [] };
   var popup = null;
@@ -69,9 +70,14 @@
       type: 'geojson',
       data: medot,
     });
+    map.addSource('userSightings', {
+      type: 'geojson',
+      data: userSightings
+    });
     map.addLayer(getSightingsLayer('sightings', 'sightings'));
     map.addLayer(getNewSightingLayer('newSighting', 'newSighting'));
     map.addLayer(getMedotLayer('medot', 'medot'));
+    map.addLayer(getSightingsLayer('userSightings', 'userSightings'))
   }
 
   function mapReadyQueue(fn) {
@@ -109,7 +115,7 @@
   }
 
   function getPok(e) {
-    var features = map.queryRenderedFeatures(e.point, { layers: ['sightings'] });
+    var features = map.queryRenderedFeatures(e.point, { layers: ['sightings', 'userSightings'] });
     return features[0];
   }
 
@@ -157,10 +163,39 @@
     map.getSource('sightings').setData(sightings);
   }
 
+  var toggleUserMap = function() {
+    if (map.getLayoutProperty('sightings', 'visibility') !== 'none') {
+      map.setLayoutProperty('sightings', 'visibility', 'none');
+    } else {
+      map.setLayoutProperty('sightings', 'visibility', 'visible');
+    }
+  }
+
   var updatePosition = function(position) {
     medot = positionThing(position);
     var source = map.getSource('medot');
     source && source.setData(medot);
+  }
+
+  var loadUserMap = function(uuid) {
+    message('Loading ze Pokemen...', function(closeMessage) {
+      var t0 = new Date();
+      ajax.get('/sightings?author_id=' + uuid, function(err, response) {
+        var temp = JSON.parse(response);
+        closeMessage();
+        if (err) {
+          complain('Error loading user\'s sightings. Sorry!');
+          ga('send', 'event', 'Error', 'Failed to load user sightings', String(err));
+        } else if (temp.features.length === 0) {
+          complain('No sightings found for the selected user.');
+        } else {
+          var source = map.getSource('userSightings');
+          source && source.setData(temp);
+          source && toggleUserMap();
+          ga('send', 'event', 'Sightings', 'Load', 'User sightings', new Date() - t0);
+        }
+      });
+    });
   }
 
   var positionMe = mapReadyQueue(function() {
@@ -224,5 +259,7 @@
     clearTemporaryPoint: clearTemporaryPoint,
     addSessionSighting: mapReadyQueue(addSessionSighting),
     positionMe: positionMe,
+    loadUserMap: loadUserMap,
+    toggleUserMap: toggleUserMap
   };
 })();
