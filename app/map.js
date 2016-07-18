@@ -99,7 +99,7 @@
   }
 
   function setDayNight(choice) {
-    const style = {
+    var style = {
       day: DAY,
       night: NIGHT,
     }[choice];
