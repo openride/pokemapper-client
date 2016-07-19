@@ -164,12 +164,13 @@ function save() {
 }
 
 
-function cancelLog() {
+function cancelLog(early) {
   isLogging = false;
   entry.style.bottom = '-300px';
   entryError.style.display = 'none';
   entrySelectBarq.clear();
   entrySave.classList.add('button-grad');
+  if (early) return;
   map.flyTo({ zoom: prevZoom, pitch: 0 });
   mapC.clearTemporaryPoint();
 }
