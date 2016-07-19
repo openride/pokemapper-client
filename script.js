@@ -302,37 +302,43 @@ creditsLink.addEventListener('click', function(e) {
   credits.style.display = 'block';
 });
 
-openRideLink.addEventListener('click', function(e) {
-  ga('send', 'event', 'Outbound', 'Click', 'Who made this?');
-});
-openRideHelloLink.addEventListener('click', function(e) {
-  ga('send', 'event', 'Outbound', 'Click', 'Mailing list signup');
-});
 
-teepublicLink1.addEventListener('click', function(e) {
-  ga('send', 'event', 'Advert', 'Click', 'Teepublic 1');
-});
+try {
+  openRideLink.addEventListener('click', function(e) {
+    ga('send', 'event', 'Outbound', 'Click', 'Who made this?');
+  });
+  openRideHelloLink.addEventListener('click', function(e) {
+    ga('send', 'event', 'Outbound', 'Click', 'Mailing list signup');
+  });
 
-teepublicLink2.addEventListener('click', function(e) {
-  ga('send', 'event', 'Advert', 'Click', 'Teepublic 2');
-});
+  teepublicLink1.addEventListener('click', function(e) {
+    ga('send', 'event', 'Advert', 'Click', 'Teepublic 1');
+  });
 
-credits.addEventListener('click', function() {
-  hideCredits();
-});
+  teepublicLink2.addEventListener('click', function(e) {
+    ga('send', 'event', 'Advert', 'Click', 'Teepublic 2');
+  });
 
-welcome.addEventListener('click', function() {
-  closeWelcome();
-});
+  credits.addEventListener('click', function() {
+    hideCredits();
+  });
 
-helloForm.addEventListener('submit', function() {
-  closeHello();
-  ga('send', 'event', 'Email', 'Subscribe');
-});
+  welcome.addEventListener('click', function() {
+    closeWelcome();
+  });
 
-helloCancel.addEventListener('click', function() {
-  closeHello();
-});
+  helloForm.addEventListener('submit', function() {
+    closeHello();
+    ga('send', 'event', 'Email', 'Subscribe');
+  });
+
+  helloCancel.addEventListener('click', function() {
+    closeHello();
+  });
+} catch (err) {
+  console.log(err);
+}
+
 
 window.addEventListener('keydown', function(e) {
   if (e.keyCode === 27) {  // esc
