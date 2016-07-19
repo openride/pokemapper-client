@@ -307,38 +307,67 @@ try {
   openRideLink.addEventListener('click', function(e) {
     ga('send', 'event', 'Outbound', 'Click', 'Who made this?');
   });
+} catch(e) {
+  console.log(e);
+}
+
+try {
   openRideHelloLink.addEventListener('click', function(e) {
     ga('send', 'event', 'Outbound', 'Click', 'Mailing list signup');
   });
+} catch (e) {
+  console.log(e);
+}
 
+try {
   teepublicLink1.addEventListener('click', function(e) {
     ga('send', 'event', 'Advert', 'Click', 'Teepublic 1');
   });
+} catch (e) {
+  console.log(e);
+}
 
+try {
   teepublicLink2.addEventListener('click', function(e) {
     ga('send', 'event', 'Advert', 'Click', 'Teepublic 2');
   });
+} catch (e) {
+  console.log(e);
+}
 
+try {
   credits.addEventListener('click', function() {
     hideCredits();
   });
+} catch (e) {
+  console.log(e);
+}
 
+
+try {
   welcome.addEventListener('click', function() {
     closeWelcome();
   });
+} catch (e) {
+  console.log(e);
+}
 
+try {
   helloForm.addEventListener('submit', function() {
     closeHello();
     ga('send', 'event', 'Email', 'Subscribe');
   });
+} catch (e) {
+  console.log(e);
+}
 
+try {
   helloCancel.addEventListener('click', function() {
     closeHello();
   });
 } catch (err) {
   console.log(err);
 }
-
 
 window.addEventListener('keydown', function(e) {
   if (e.keyCode === 27) {  // esc
