@@ -357,7 +357,7 @@ p {
   bottom: 2px;
   right: 2px;
 }
-.fb-like-position > a {
+#credits-link {
   color: white;
   display: inline-block;
   background: #f90;
@@ -386,6 +386,19 @@ p {
 
 #open-ride-link img {
   vertical-align: middle;
+}
+
+.mymap-footer {
+  background: hsla(0, 0%, 100%, 0.8);
+  padding: 6px;
+}
+.social-button {
+  color: #fff;
+  font-weight: bold;
+  display: inline-block;
+  background: red;
+  padding: 3px 7px;
+  text-decoration: none;
 }
 
 .overlay {

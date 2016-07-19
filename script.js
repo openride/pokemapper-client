@@ -57,6 +57,9 @@ var creditsLink = document.getElementById('credits-link');
 var credits = document.getElementById('credits');
 var openRideLink = document.getElementById('open-ride-link');
 
+var shareFb = document.getElementById('share-fb');
+var shareTw = document.getElementById('share-tw');
+
 // awful global state stuff
 var isLoggedIn = false;
 var fbName = null;
@@ -368,6 +371,22 @@ try {
 } catch (err) {
   console.log(err);
 }
+
+shareFb.addEventListener('click', function(e) {
+  e.preventDefault();
+  FB.ui({
+    method: 'share',
+    href: '' + location,
+    hashtag: '#pokemapper',
+    quote: 'Check out my Pokémon GO sightings on Pokémapper!'
+  });
+  ga('send', 'event', 'My map', 'Share', 'Facebook');
+});
+
+shareTw.addEventListener('click', function(e) {
+  ga('send', 'event', 'My map', 'Share', 'Twitter');
+});
+
 
 window.addEventListener('keydown', function(e) {
   if (e.keyCode === 27) {  // esc

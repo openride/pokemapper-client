@@ -5,6 +5,9 @@
   var mymapLogin = document.getElementById('mymap-login');
   var mymapLoginButton = document.getElementById('mymap-login-button');
   var entry = document.getElementById('entry');
+  var globalFooter = document.querySelector('.global-footer');
+  var mymapFooter = document.querySelector('.mymap-footer');
+  var shareTw = document.getElementById('share-tw');
 
   // State
   var currentUser = null;
@@ -33,18 +36,26 @@
     if (route.path === '/') {
       cancelLog(true);
       mymapLogin.style.display = 'none';
+      mymapFooter.style.display = 'none';
+      globalFooter.style.display = 'block';
       globalTab.classList.add('selected');
       mapC.loadGlobalMap();
       showWelcome();
     } else if (route.path === '/my-map') {
       closeWelcome();
       mymapLogin.style.display = 'block';
+      mymapFooter.style.display = 'block';
+      globalFooter.style.display = 'none';
       myTab.classList.add('selected');
       // TODO: handle no querystring
       if (!route.query.id) {
         showLogin();
       } else {
         mapC.loadUserMap(route.query.id);
+        shareTw.href = 'https://twitter.com/intent/tweet?' +
+          'text=Check%20out%20my%20Pok%C3%A9mon%20GO%20sightings%20on%20Pok%C3%A9mapper!&' +
+          'url=' + encodeURIComponent('https://pokemapper.co/' + location.hash) + '&' +
+          'hashtags=pokemapper,pokemongo';
       }
     }
     ga('send', 'pageview', route.path);
