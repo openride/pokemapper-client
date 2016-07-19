@@ -170,6 +170,9 @@
         } else {
           sightings = JSON.parse(response);
           loaded ? addDataLayer() : map.once('load', addDataLayer);
+          message('Showing most recent 40,000 sightings...', function(closeMessage) {
+            setTimeout(closeMessage, 7000);
+          });
           ga('send', 'event', 'Sightings', 'Load', 'Most recent', new Date() - t0);
         }
       });
