@@ -372,20 +372,28 @@ try {
   console.log(err);
 }
 
-shareFb.addEventListener('click', function(e) {
-  e.preventDefault();
-  FB.ui({
-    method: 'share',
-    href: '' + location,
-    hashtag: '#pokemapper',
-    quote: 'Check out my Pokémon GO sightings on Pokémapper!'
+try {
+  shareFb.addEventListener('click', function(e) {
+    e.preventDefault();
+    FB.ui({
+      method: 'share',
+      href: '' + location,
+      hashtag: '#pokemapper',
+      quote: 'Check out my Pokémon GO sightings on Pokémapper!'
+    });
+    ga('send', 'event', 'My map', 'Share', 'Facebook');
   });
-  ga('send', 'event', 'My map', 'Share', 'Facebook');
-});
+} catch (err) {
+  console.log(err);
+}
 
-shareTw.addEventListener('click', function(e) {
-  ga('send', 'event', 'My map', 'Share', 'Twitter');
-});
+try {
+  shareTw.addEventListener('click', function(e) {
+    ga('send', 'event', 'My map', 'Share', 'Twitter');
+  });
+} catch (err) {
+  console.log(err);
+}
 
 
 window.addEventListener('keydown', function(e) {
