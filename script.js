@@ -38,12 +38,11 @@ var barqOpts = {
   placeholderText: 'Enter Pokémon name',
   noResultsMessage: 'No Pokémon found',
 };
+var barqSearchOpts = {};
+Object.keys(barqOpts).forEach(function(k) { barqSearchOpts[k] = barqOpts[k] });
+barqSearchOpts.onchange = function barqHandler() { mapC.filterPoke(this.value); };
 var entrySelectBarq = new Barq(entrySelect, barqOpts).init();
-var searchSelectBarq = new Barq(searchSelect, Object.assign({}, barqOpts, {
-  onchange: function barqHandler() {
-    mapC.filterPoke(this.value);
-  },
-})).init();
+var searchSelectBarq = new Barq(searchSelect, barqSearchOpts).init();
 var entryDatepiker = document.getElementById('datepicker');
 var picker = new Pikaday({
   field: entryDatepiker,
