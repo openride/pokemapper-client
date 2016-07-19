@@ -31,14 +31,11 @@
     var selected = document.querySelector('.tabs a.selected');
     selected && selected.classList.remove('selected');
     if (route.path === '/') {
-      cancelLog();
-      mymapLogin.style.display = 'none';
       globalTab.classList.add('selected');
       mapC.loadGlobalMap();
       showWelcome();
     } else if (route.path === '/my-map') {
       closeWelcome();
-      mymapLogin.style.display = 'block';
       myTab.classList.add('selected');
       // TODO: handle no querystring
       if (!route.query.id) {
