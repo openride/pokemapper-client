@@ -10,7 +10,7 @@
   var NIGHT = '/map-night.json';
   var BASE_ID = 'base';
   var SIGHTINGS_ID = 'sightings';
-  var SIGHTINGS_LIMIT = 10000;
+  var SIGHTINGS_LIMIT = 40000;
 
   // https://developer.mozilla.org/en-US/docs/Web/API/PositionError
   var geoErrMsg = {
