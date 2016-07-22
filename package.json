@@ -4,7 +4,11 @@
   "description": "",
   "main": ".",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently -p name --names 'browser watchify,server watchify,server reload' -k 'npm run start-browser-build' 'npm run start-server-build' 'npm run start-server-reload'",
+    "start-browser-build": "watchify browser -v -d --extension .js --extension jsx -t babelify -t envify -p livereactload -o public/app.js",
+    "start-server-build": "watchify server -v -d --bare --extension js --extension jsx -t babelify -o server/index.built.js",
+    "start-server-reload": "nodemon --watch server/index.built.js server/index.built.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,10 @@
   },
   "homepage": "https://github.com/openride/openride-client#readme",
   "devDependencies": {
+    "babel-plugin-react-transform": "^2.0.2",
+    "concurrently": "^2.2.0",
+    "livereactload": "^2.2.4",
+    "react-proxy": "^1.1.8",
     "watchify": "^3.7.0"
   },
   "dependencies": {
@@ -30,11 +38,16 @@
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "envify": "^3.4.1",
+    "handlebars": "^4.0.5",
     "hapi": "^13.5.0",
     "immutable": "^3.8.1",
+    "inert": "^4.0.1",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-router": "^2.6.0",
     "results": "^0.14.0",
-    "spindle-ui": "0.0.7"
+    "spindle-ui": "0.0.7",
+    "vision": "^4.1.0"
   }
 }

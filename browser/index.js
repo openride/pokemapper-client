@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Spindle from 'spindle-ui';
 
-import Hello from '../components/Hello';
+import routes from '../routes';
 
-ReactDOM.render(<Hello />, document.getElementById('app'));
+const Root = Spindle('Routes', { view: () => routes });
+
+ReactDOM.render(<Root />, document.getElementById('app'));

@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PokéMapper: Share Pokémon Go Sightings | OpenRide</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://cdn.optimizely.com/js/6495437799.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.1/mapbox-gl.css' rel='stylesheet' />
+    <meta property="og:url" content="https://pokemapper.co/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Share Pokemon Go Sightings" />
+    <meta property="og:description" content="PokéMapper is a website for thousands of players map out the best Pokémon Go locations all over the world, by OpenRide." />
+    <meta property="og:site_name" content="PokéMapper / OpenRide" />
+    <meta property="og:image" content="https://pokemapper.co/fb.png" />
+    <meta property="og:image:height" content="521" />
+    <meta property="og:image:width" content="1359" />
+    <meta property="fb:app_id" content="306585593020223" />
+  </head>
+  <body>
+    <div id="app">{{{app}}}</div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : 'x',  //isProd ? '306585593020223' : '306876449657804',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+      };
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-68070301-3', 'auto');
+    </script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

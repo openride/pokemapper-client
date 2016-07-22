@@ -1,3 +1,5 @@
 *.log
 .DS_Store
 node_modules/
+server/index.built.js
+public/app.js
