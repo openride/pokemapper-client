@@ -1,0 +1,9 @@
+machine:
+  node:
+    version: 6.3.0
+deployment:
+  blah:
+    branch: master
+    owner: openride
+    commands:
+      - curl --fail -XPOST $REDEPLOY_HOOK

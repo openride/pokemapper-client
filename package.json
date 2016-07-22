@@ -4,7 +4,10 @@
   "description": "",
   "main": ".",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build-browser && npm run build-server",
+    "build-browser": "NODE_ENV=production browserify browser -v -d --extension .js --extension jsx -t babelify -t envify | uglifyjs --compress --mangle --screw-ie8 > public/app.js",
+    "build-server": "NODE_ENV=production browserify server -v -d --bare --extension js --extension jsx -t babelify -o server/index.built.js",
+    "test": "echo \"No tests yet...\"",
     "start": "concurrently -p name --names 'browser watchify,server watchify,server reload' -k 'npm run start-browser-build' 'npm run start-server-build' 'npm run start-server-reload'",
     "start-browser-build": "watchify browser -v -d --extension .js --extension jsx -t babelify -t envify -p livereactload -o public/app.js",
     "start-server-build": "watchify server -v -d --bare --extension js --extension jsx -t babelify -o server/index.built.js",
@@ -48,6 +51,7 @@
     "react-router": "^2.6.0",
     "results": "^0.14.0",
     "spindle-ui": "0.0.7",
+    "uglify-js": "^2.7.0",
     "vision": "^4.1.0"
   }
 }
