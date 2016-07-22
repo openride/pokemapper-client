@@ -346,7 +346,7 @@
             // Transforms all the <option> elements in <li> elements.
             // The data-value attribute carries the original <option> value.
             var regex = /<option(?:[^>]*?value="([^"]*?)"|)[^>]*?>(.*?)<\/option>\n?/gi;
-            var li = '<li data-value="$1"><img alt="icon" src="/icons/$1.png" />$2</li>';
+            var li = '<li data-value="$1"><img alt="icon" src="/static/images/icons/$1.png" />$2</li>';
             items = items.replace(regex, li);
 
             return items;

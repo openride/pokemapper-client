@@ -6,8 +6,8 @@
 
   // Constants
 
-  var DAY = '/map-day.json';
-  var NIGHT = '/map-night.json';
+  var DAY = '/static/map-themes/day.json';
+  var NIGHT = '/static/map-themes/night.json';
   var BASE_ID = 'base';
   var SIGHTINGS_ID = 'sightings';
   var SIGHTINGS_LIMIT = 40000;
@@ -132,7 +132,7 @@
     popup = new mapboxgl.Popup({ closeButton: false })
       .setLngLat(pok.geometry.coordinates)
       .setHTML(
-        '<h1><img class="pokeicon" alt="icon" src="/icons/' + props.speciesId + '.png" /> ' + name + '</h1>' +
+        '<h1><img class="pokeicon" alt="icon" src="/static/images/icons/' + props.speciesId + '.png" /> ' + name + '</h1>' +
         '<p><b>type:</b> ' + props.type + '</p>' +
         '<p><b>spotted:</b> ' + new Date(props.date).toLocaleDateString() + ' &ndash; ' + props.timing + '</p>'
       )

@@ -56,6 +56,7 @@ server.route({
       } else if (props) {
         reply.view('index', {
           app: ReactDOMServer.renderToString(<RouterContext {...props} />),
+          isProd: false,
         });
       } else {
         reply('Not found').code(404);
