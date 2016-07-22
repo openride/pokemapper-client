@@ -282,7 +282,12 @@
     setTimeout(function() {
       if (!recentDoubleClick) {
         if (isLogging) return cancelLog();
-        if (popup) return closePopup();
+        if (popup) {
+          closePopup();
+          var pokeHere = getPok(e);
+          if (pokeHere) return showPok(pokeHere);
+          return;
+        }
         var pokeHere = getPok(e);
         if (pokeHere) return showPok(pokeHere);
         if (map.getZoom() < 11) return complain('Zoom in to add your Pokémon sighting');
