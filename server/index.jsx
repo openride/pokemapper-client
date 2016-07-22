@@ -57,6 +57,7 @@ server.route({
         reply.view('index', {
           app: ReactDOMServer.renderToString(<RouterContext {...props} />),
           isProd: false,
+          version: '0.0.2',
         });
       } else {
         reply('Not found').code(404);

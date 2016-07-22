@@ -2,20 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>PokéMapper: Share Pokémon Go Sightings | OpenRide</title>
+    <title>Pokémapper: The world-wide Pokémon GO map, by OpenRide</title>
+    <meta name="google-site-verification" content="U0Bv4tEsHuFSXAJZUztUDXPuUoZSo0PZYlgZU4JFiI8" />
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src="https://cdn.optimizely.com/js/6495437799.js"></script>
-    <meta property="og:url" content="https://pokemapper.co/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Share Pokemon Go Sightings" />
-    <meta property="og:description" content="PokéMapper is a website for thousands of players map out the best Pokémon Go locations all over the world, by OpenRide." />
-    <meta property="og:site_name" content="PokéMapper / OpenRide" />
+    <meta property="og:title" content="Share Pokémon GO Sightings" />
+    <meta property="og:description" content="Share your Pokémon GO finds on Pokémapper – The world-wide Pokémon map, by OpenRide." />
+    <meta property="og:site_name" content="Pokémapper / OpenRide" />
     <meta property="og:image" content="https://pokemapper.co/static/images/fb.png" />
     <meta property="og:image:height" content="521" />
     <meta property="og:image:width" content="1359" />
     <meta property="fb:app_id" content="306585593020223" />
   </head>
   <body>
+    <img id="cpm-tracking-pixel" alt='' width='1' height='1' src='//server.cpmstar.com/action.aspx?advertiserid=11&gif=1' />
     <div id="app">{{{app}}}</div>
     <script>
       var isProd = {{isProd}};
@@ -45,7 +46,7 @@
       ga('create', 'UA-68070301-3', 'auto');
       ga('send', 'pageview');
     </script>
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v={{version}}"></script>
 
 
     <!-- legacy old stuff -->
@@ -59,7 +60,7 @@
     <div id="top">
       <h1>
         <div class="img-wrap">
-          <img class="logo" src="/static/images/pokemapper.svg" alt="PokéMapper" />
+          <img class="logo" src="/static/images/pokemapper.svg" alt="Pokémapper" />
         </div>
         <div id="search-input-wrap">
         </div>
@@ -73,7 +74,7 @@
 
     <div id="welcome" class="overlay unstick">
       <h2>Find &amp; Share Pokémon!</h2>
-      <p>PokéMapper is crowd-sourced Pokémon Go sightings tracker.</p>
+      <p>Pokémapper is the crowd-sourced Pokémon GO sightings tracker used by millions of players around the world.</p>
       <p>Tap on the map to share your Pokémon sightings with the world!</p>
       <p style="color: #333">Currently showing the most recent 10,000 submissions. Older submissions will be back online shortly!</p>
       <div class="form-row button-row">
@@ -88,9 +89,9 @@
 
       <!-- openride email message -->
       <div id="email-option" style="display: block"> <!-- using inline styles to (hopefully) simplify optimizely... -->
-        <h2>Thanks for using PokéMapper!</h2>
-        <p>PokéMapper is brought to you by <a id="open-ride-link-hello" title="OpenRide: Long-distance Ridesharing" target="_blank" href="https://openride.co/pokemapper?utm_campaign=poke&utm_source=pokemapper">OpenRide</a>, making travel and adventure easier for people everywhere.</p>
-        <p>Ready to learn more? Sign up to receive fun updates, including soon-to-come rides to collect rare Pokemon across the country.</p>
+        <h2>Thanks for using Pokémapper!</h2>
+        <p>Pokémapper is brought to you by <a id="open-ride-link-hello" title="OpenRide: Long-distance Ridesharing" target="_blank" href="https://openride.co/pokemapper?utm_campaign=poke&utm_source=pokemapper">OpenRide</a>, making travel and adventure easier for people everywhere.</p>
+        <p>Ready to learn more? Sign up to receive fun updates, including soon-to-come rides to collect rare Pokémon across the country.</p>
 
         <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
         <div id="mc_embed_signup">
@@ -112,9 +113,51 @@
       <!-- t-shirt test message -->
       <div id="tshirt-option" style="display: none"> <!-- using inline styles to (hopefully) simplify optimizely... -->
         <h2>Thanks for using Pokémapper!</h2>
-        <p>Want to be the coolest Pokéhunter on your block? Help support Pokémapper by checking out these <a id="teepublic-link-1" href="https://www.teepublic.com/stores/pokemapper">cool Pokémon t-shirts</a> on teepublic :).</p>
-        <a id="teepublic-link-2" href="https://www.teepublic.com/stores/pokemapper"><img src="/static/images/teepublic.png"/></a>
+        <p>Want to be the coolest Pokéhunter on your block? Help support Pokémapper by checking out these <a id="teepublic-link-1" href="http://www.shareasale.com/r.cfm?u=1336405&b=18545&m=5108&afftrack=poke&urllink=www%2Eteepublic%2Ecom%2Fstores%2Fpokemapper" target="_blank">cool Pokémon t-shirts</a> on teepublic :).</p>
+        <a id="teepublic-link-2" href="http://www.shareasale.com/r.cfm?u=1336405&b=18545&m=5108&afftrack=poke&urllink=www%2Eteepublic%2Ecom%2Fstores%2Fpokemapper" target="_blank"><img src="/static/images/teepublic.png"/></a>
       </div>
+
+
+      <!-- amazon link test -->
+      <div id="amazon-plush-option" style="display: none">
+        <h2>Thanks for using Pokémapper!</h2>
+        <p>Want to be the coolest Pokéhunter on your block? Help support Pokémapper by checking out these cool Poképroducts.</p>
+        <script type="text/javascript">
+        amzn_assoc_placement = "adunit0";
+        amzn_assoc_search_bar = "false";
+        amzn_assoc_tracking_id = "pokemapper-20";
+        amzn_assoc_ad_mode = "manual";
+        amzn_assoc_ad_type = "smart";
+        amzn_assoc_marketplace = "amazon";
+        amzn_assoc_region = "US";
+        amzn_assoc_title = "PokéMapper's Favorite Plush Pokémon";
+        amzn_assoc_linkid = "ec70c7b3f405bca00849673cd4806fd2";
+        amzn_assoc_asins = "B00JM8WU22,B00GGKKXC8,B00PY6NGOW,B00IJPDYB0";
+        </script>
+        <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+        <div id="adunit0"></div>
+      </div>
+
+      <!-- amazon link test 2-->
+      <div id="amazon-team-option" style="display: none">
+        <h2>Thanks for using Pokémapper!</h2>
+        <p>Want to be the coolest Pokéhunter on your block? Help support Pokémapper by checking out these cool Poképroducts.</p>
+        <script type="text/javascript">
+        amzn_assoc_placement = "adunit1";
+        amzn_assoc_search_bar = "false";
+        amzn_assoc_tracking_id = "pokemapper-20";
+        amzn_assoc_ad_mode = "manual";
+        amzn_assoc_ad_type = "smart";
+        amzn_assoc_marketplace = "amazon";
+        amzn_assoc_region = "US";
+        amzn_assoc_title = "PokéMapper Team Pride Page";
+        amzn_assoc_linkid = "320bf90a784b9686bfafab5dfb26673b";
+        amzn_assoc_asins = "B01IAD0A3A,B01I7CBZSI,B01I7CH4B0,B01I7CEHWE";
+        </script>
+        <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+        <div id="adunit1"></div>
+      </div>
+
 
       <!-- close button -->
       <div class="form-row button-row">
@@ -143,25 +186,32 @@
     </div>
 
     <div class="fb-like-position">
-      <a href="#" id="credits-link">
-        Who made this?
-      </a>
-      <div
-        class="fb-like"
-        data-href="https://www.facebook.com/pokemapper/"
-        data-layout="button"
-        data-action="like"
-        data-size="large"
-        data-show-faces="true"
-        data-share="false">
+      <div class="global-footer">
+        <a href="#" id="credits-link">
+          Who made this?
+        </a>
+        <div
+          class="fb-like"
+          data-href="https://www.facebook.com/pokemapper/"
+          data-layout="button"
+          data-action="like"
+          data-size="large"
+          data-show-faces="true"
+          data-share="false">
+        </div>
+        <div
+          class="fb-share-button"
+          data-href="https://pokemapper.co"
+          data-layout="button_count"
+          data-size="large"
+          data-mobile-iframe="true">
+          <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpokemapper.co%2F&amp;src=sdkpreparse">Share</a>
+        </div>
       </div>
-      <div
-        class="fb-share-button"
-        data-href="https://pokemapper.co"
-        data-layout="button_count"
-        data-size="large"
-        data-mobile-iframe="true">
-        <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpokemapper.co%2F&amp;src=sdkpreparse">Share</a>
+      <div class="mymap-footer">
+        Show off your Pokémap!
+        <a id="share-fb" class="social-button" href="#">Share</a>
+        <a id="share-tw" class="social-button" target="_blank" href="#https://twitter.com/intent/tweet?text=Check%20out%20my%20Pok%C3%A9mon%20GO%20sightings%20on%20Pok%C3%A9mapper!&url=https%3A%2F%2Fpokemapper.co&hashtags=pokemapper,pokemongo">Tweet</a>
       </div>
     </div>
 
@@ -344,14 +394,14 @@
       </form>
       <div id="entry-login" class="log-in">
         <h2>Save your sighting</h2>
-        <p>Log in to save your Pokemon Go sighting at this location</p>
+        <p>Log in to save your Pokémon GO sighting at this location</p>
         <p>
           <button id="entry-login-button" class="pokebutton button-grad">Log in</button>
         </p>
       </div>
       <div id="mymap-login" class="log-in">
         <h2>View your map</h2>
-        <p>Log in to save and view all your Pokemon Go sightings</p>
+        <p>Log in to save and view all your Pokémon GO sightings</p>
         <p>
           <button id="mymap-login-button" class="pokebutton button-grad">Log in</button>
         </p>
@@ -389,23 +439,28 @@
         </button>
       </div>
     </div>
+    <script
+      src="/static/bugsnag-2.min.js"
+      data-apikey="532390e96d7e10b8c1d87510b9d47b10"
+      data-appversion="{{version}}">
+    </script>
     <link rel="stylesheet" href="/static/old/barq.css" />
     <link rel="stylesheet" href="/static/old/pikaday.css" />
-    <link rel="stylesheet" href="/static/old/style.css" />
+    <link rel="stylesheet" href="/static/old/style.css?v={{version}}" />
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.1/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.1/mapbox-gl.js'></script>
     <script src="/static/old/pikaday.js"></script>
     <script src="/static/old/barq.js"></script>
-    <script src="/static/old/pokemon.js"></script>
-    <script src="/static/old/app/dom.js"></script>
-    <script src="/static/old/app/utils.js"></script>
-    <script src="/static/old/app/support.js"></script>
-    <script src="/static/old/app/ajax.js"></script>
-    <script src="/static/old/app/layers.js"></script>
-    <script src="/static/old/app/pok-info.js"></script>
-    <script src="/static/old/app/map.js"></script>
-    <script src="/static/old/script.js"></script>
-    <script src="/static/old/app/tabs.js"></script>
+    <script src="/static/old/pokemon.js?v={{version}}"></script>
+    <script src="/static/old/app/dom.js?v={{version}}"></script>
+    <script src="/static/old/app/utils.js?v={{version}}"></script>
+    <script src="/static/old/app/support.js?v={{version}}"></script>
+    <script src="/static/old/app/ajax.js?v={{version}}"></script>
+    <script src="/static/old/app/layers.js?v={{version}}"></script>
+    <script src="/static/old/app/pok-info.js?v={{version}}"></script>
+    <script src="/static/old/app/map.js?v={{version}}"></script>
+    <script src="/static/old/script.js?v={{version}}"></script>
+    <script src="/static/old/app/tabs.js?v={{version}}"></script>
 
   </body>
 </html>
