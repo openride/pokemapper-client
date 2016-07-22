@@ -44,7 +44,7 @@ server.route({
   },
   config: {
     cache: {
-      expiresIn: 3 * 60 * 60 * 1000,  // 3 hours, to start
+      expiresIn: 6 * 60 * 60 * 1000,  // 6 hours. might bump higher later
       privacy: 'public',
     },
   },
@@ -68,17 +68,11 @@ server.route({
             FB_APP_ID: '306876449657804',
             API_HOST: 'http://localhost:3000',
           }, process.env))
-          .header('Surrogate-Control', 'max-age=10');  // limit fastly to caching for just 10sec
+          .header('Surrogate-Control', 'max-age=600');  // have fastly cache stuff for a while (purge on deploy)
       } else {
         reply('Not found').code(404);
       }
     }),
-  config: {
-    cache: {
-      expiresIn: 10 * 1000,  // 10 seconds
-      privacy: 'public',
-    },
-  },
 });
 
 server
