@@ -18,14 +18,14 @@
     _ajaxCb(request, function(err, responseText) {
       err ? cb(err) : cb(null, responseText);
     });
-    request.open('GET', `${API_HOST}${url}`, true);
+    request.open('GET', API_HOST + url, true);
     request.send();
   }
 
   function post(url, json, cb) {
     var request = new XMLHttpRequest();
     _ajaxCb(request, cb);
-    request.open('POST', `${API_HOST}${url}`, true);
+    request.open('POST', API_HOST + url, true);
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     request.send(JSON.stringify(json));
   }
