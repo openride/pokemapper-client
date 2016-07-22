@@ -11,6 +11,7 @@
   var BASE_ID = 'base';
   var SIGHTINGS_ID = 'sightings';
   var SIGHTINGS_LIMIT = 40000;
+  var DOUBLE_CLICK_THRESHOLD = 300; // ms
 
   // https://developer.mozilla.org/en-US/docs/Web/API/PositionError
   var geoErrMsg = {
@@ -29,6 +30,8 @@
   var medot = { type: 'FeatureCollection', features: [] };
   var popup = null;
   var geo = 'waiting';
+  var lastClickTime = null;
+  var recentDoubleClick = false; // i hate myself
 
   // Init
 
@@ -84,6 +87,20 @@
       map.setFilter('sightings', ['==', 'speciesId', parseInt(pokeId)]);
     } else {
       map.setFilter('sightings', ['all']);
+    }
+  }
+
+  function checkDoubleClick() {
+    var currentTime = new Date();
+    if (!lastClickTime) {
+      lastClickTime = currentTime;
+      recentDoubleClick = false;
+    } else if (currentTime.getTime() - lastClickTime.getTime() <= DOUBLE_CLICK_THRESHOLD) {
+      lastClickTime = currentTime;
+      recentDoubleClick = true;
+    } else {
+      lastClickTime = currentTime;
+      recentDoubleClick = false;
     }
   }
 
@@ -261,12 +278,17 @@
   map.on('style.load', addDataLayer);
 
   map.on('click', function(e) {
-    if (isLogging) return cancelLog();
-    if (popup) return closePopup();
-    var pokeHere = getPok(e);
-    if (pokeHere) return showPok(pokeHere);
-    if (map.getZoom() < 11) return complain('Zoom in to add your Pokémon sighting');
-    startLog(e.lngLat);
+    checkDoubleClick();
+    setTimeout(function() {
+      if (!recentDoubleClick) {
+        if (isLogging) return cancelLog();
+        if (popup) return closePopup();
+        var pokeHere = getPok(e);
+        if (pokeHere) return showPok(pokeHere);
+        if (map.getZoom() < 11) return complain('Zoom in to add your Pokémon sighting');
+        startLog(e.lngLat);
+      }
+    }, DOUBLE_CLICK_THRESHOLD);
   });
 
   // Add zoom and rotation controls to the map.
