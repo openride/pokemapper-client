@@ -42,6 +42,12 @@ server.route({
       path: 'public',
     },
   },
+  config: {
+    cache: {
+      expiresIn: 3 * 60 * 60 * 1000,  // 3 hours, to start
+      privacy: 'public',
+    },
+  },
 });
 
 server.route({
@@ -56,7 +62,7 @@ server.route({
       } else if (props) {
         reply.view('index', Object.assign({
           app: ReactDOMServer.renderToString(<RouterContext {...props} />),
-          version: '0.0.2',
+          version: '0.0.3',
           NODE_ENV: 'development',
           FB_APP_ID: '306876449657804',
           API_HOST: 'http://localhost:3000',
@@ -65,6 +71,12 @@ server.route({
         reply('Not found').code(404);
       }
     }),
+  config: {
+    cache: {
+      expiresIn: 10 * 1000,  // 10 seconds
+      privacy: 'public',
+    },
+  },
 });
 
 server

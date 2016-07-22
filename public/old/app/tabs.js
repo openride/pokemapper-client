@@ -8,6 +8,7 @@
   var globalFooter = document.querySelector('.global-footer');
   var mymapFooter = document.querySelector('.mymap-footer');
   var shareTw = document.getElementById('share-tw');
+  var overlay = document.getElementById('loading-overlay');
 
   // State
   var currentUser = null;
@@ -79,6 +80,7 @@
 
   // init
   setTab();
+  overlay.classList.add('ready');
 
   // listeners
   window.addEventListener('hashchange', setTab);

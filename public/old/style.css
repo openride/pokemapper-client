@@ -6,6 +6,10 @@ body {
   overflow: hidden;
 }
 
+#loading-overlay.ready {
+  display: none;
+}
+
 #map {
   position: absolute;
   top: 40px;

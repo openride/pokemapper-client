@@ -14,9 +14,36 @@
     <meta property="og:image:height" content="521" />
     <meta property="og:image:width" content="1359" />
     <meta property="fb:app_id" content="{{FB_APP_ID}}" />
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      #loading-overlay {
+        background: hsl(185, 59%, 78%);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+      }
+      /*#loading-overlay.ready {
+        display: none;
+      }*/
+      #loading-overlay p {
+        color: #0a8b9e;
+        margin: 20% 0 0;
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
   </head>
   <body>
     <img id="cpm-tracking-pixel" alt='' width='1' height='1' src='//server.cpmstar.com/action.aspx?advertiserid=11&gif=1' />
+    <div id="loading-overlay">
+      <p>Pokémapper is loading&hellip;</p>
+    </div>
     <div id="app">{{{app}}}</div>
     <script>
       // global config injections
