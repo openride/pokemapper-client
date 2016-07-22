@@ -13,18 +13,19 @@
     <meta property="og:image" content="https://pokemapper.co/static/images/fb.png" />
     <meta property="og:image:height" content="521" />
     <meta property="og:image:width" content="1359" />
-    <meta property="fb:app_id" content="306585593020223" />
+    <meta property="fb:app_id" content="{{FB_APP_ID}}" />
   </head>
   <body>
     <img id="cpm-tracking-pixel" alt='' width='1' height='1' src='//server.cpmstar.com/action.aspx?advertiserid=11&gif=1' />
     <div id="app">{{{app}}}</div>
     <script>
-      var isProd = {{isProd}};
+      // global config injections
+      var API_HOST = '{{API_HOST}}';
     </script>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : isProd ? '306585593020223' : '306876449657804',
+          appId      : '{{FB_APP_ID}}',
           cookie     : true,
           xfbml      : true,
           version    : 'v2.6'
@@ -441,7 +442,7 @@
     </div>
     <script
       src="/static/bugsnag-2.min.js"
-      data-apikey="532390e96d7e10b8c1d87510b9d47b10"
+      data-apikey="{{BUGSNAG_KEY}}"
       data-appversion="{{version}}">
     </script>
     <link rel="stylesheet" href="/static/old/barq.css" />

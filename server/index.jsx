@@ -54,11 +54,13 @@ server.route({
       } else if (redir) {
         reply.redirect(redir.pathname + redir.search);
       } else if (props) {
-        reply.view('index', {
+        reply.view('index', Object.assign({
           app: ReactDOMServer.renderToString(<RouterContext {...props} />),
-          isProd: false,
           version: '0.0.2',
-        });
+          NODE_ENV: 'development',
+          FB_APP_ID: '306876449657804',
+          API_HOST: 'http://localhost:3000',
+        }, process.env));
       } else {
         reply('Not found').code(404);
       }
