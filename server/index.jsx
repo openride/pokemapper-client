@@ -60,13 +60,15 @@ server.route({
       } else if (redir) {
         reply.redirect(redir.pathname + redir.search);
       } else if (props) {
-        reply.view('index', Object.assign({
-          app: ReactDOMServer.renderToString(<RouterContext {...props} />),
-          version: '0.0.3',
-          NODE_ENV: 'development',
-          FB_APP_ID: '306876449657804',
-          API_HOST: 'http://localhost:3000',
-        }, process.env));
+        reply
+          .view('index', Object.assign({
+            app: ReactDOMServer.renderToString(<RouterContext {...props} />),
+            version: '0.0.3',
+            NODE_ENV: 'development',
+            FB_APP_ID: '306876449657804',
+            API_HOST: 'http://localhost:3000',
+          }, process.env))
+          .header('Surrogate-Control', 'max-age=10');  // limit fastly to caching for just 10sec
       } else {
         reply('Not found').code(404);
       }
