@@ -269,6 +269,9 @@
     startLog(e.lngLat);
   });
 
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.Navigation({ position: 'bottom-left' }));
+
   // Export
 
   window.mapC = {
