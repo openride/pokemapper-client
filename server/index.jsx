@@ -30,7 +30,7 @@ server
   .catch(err => console.err('nope', err));
 
 server.connection({
-  host: 'localhost',
+  host: '0.0.0.0',
   port: 4000,
 });
 
