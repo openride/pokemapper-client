@@ -39,8 +39,8 @@
     attributionControl: false,
     container: 'map',
     style: DAY,
-    zoom: 2,
-    center: [-94.4519211, 38.9926981],
+    zoom: 0,
+    center: [-50, 38.9926981],
   });
 
   // Helpers
