@@ -6,8 +6,8 @@
 
   // Constants
 
-  var ESRI_DAY = '/static/map-themes/esri-day.json';
-  var ESRI_NIGHT = '/static/map-themes/esri-night.json';
+  var ESRI_DAY = '/static/map-themes/esri-day-2.json';
+  var ESRI_NIGHT = '/static/map-themes/esri-night-2.json';
   var DAY = ESRI_DAY;  // '/static/map-themes/day.json';
   var NIGHT = ESRI_NIGHT;  // '/static/map-themes/night.json';
   var BASE_ID = 'base';
