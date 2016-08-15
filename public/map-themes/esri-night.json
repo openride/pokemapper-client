@@ -4,10 +4,10 @@
     "simple-tiles": {
       "type": "raster",
       "tiles": [
-        "http://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-        "http://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-        "http://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-        "http://d.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+        "https://cartodb-basemaps-a.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+        "https://cartodb-basemaps-b.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+        "https://cartodb-basemaps-c.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+        "https://cartodb-basemaps-d.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
       ],
       "tileSize": 256
     }

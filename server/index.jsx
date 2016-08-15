@@ -63,7 +63,7 @@ server.route({
         reply
           .view('index', Object.assign({
             app: ReactDOMServer.renderToString(<RouterContext {...props} />),
-            version: '0.0.7',
+            version: '0.0.8',
             NODE_ENV: 'development',
             FB_APP_ID: '306876449657804',
             API_HOST: 'http://localhost:3000',
