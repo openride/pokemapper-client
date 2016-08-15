@@ -6,8 +6,10 @@
 
   // Constants
 
-  var DAY = '/static/map-themes/day.json';
-  var NIGHT = '/static/map-themes/night.json';
+  var ESRI_DAY = '/static/map-themes/esri-day.json';
+  var ESRI_NIGHT = '/static/map-themes/esri-night.json';
+  var DAY = ESRI_DAY;  // '/static/map-themes/day.json';
+  var NIGHT = ESRI_NIGHT;  // '/static/map-themes/night.json';
   var BASE_ID = 'base';
   var SIGHTINGS_ID = 'sightings';
   var SIGHTINGS_LIMIT = 40000;
