@@ -65,7 +65,7 @@ const News = () => (
         boxSizing: 'border-box',
         position: 'fixed',
         zIndex: 100000,
-        top: 0,
+        top: 41,
         left: 0,
         right: 0,
         bottom: 0,
@@ -74,11 +74,6 @@ const News = () => (
         padding: '3em 4%',
     }}
   >
-    <h3 style={{ margin: '0 0 40px' }}>
-        <Link to="/">
-            ← Back to Pokémapper
-        </Link>
-    </h3>
     <h2>Latest Pokémon GO News</h2>
     <div style={{ margin: '0 auto', maxWidth: 640 }}>
       <div dangerouslySetInnerHTML={{ __html: feedwind }} />

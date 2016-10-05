@@ -2,6 +2,7 @@
   // DOM refs
   var globalTab = document.getElementById('global-map-tab');
   var myTab = document.getElementById('my-map-tab');
+  var newsTab = document.getElementById('news-tab');
   var mymapLogin = document.getElementById('mymap-login');
   var mymapLoginButton = document.getElementById('mymap-login-button');
   var entry = document.getElementById('entry');
@@ -15,6 +16,10 @@
 
   // helpers
   function getRoute() {
+    var normalPath = window.location.pathname;
+    if (normalPath !== '/') {
+      return { path: normalPath, query: {} };
+    }
     var nohash = window.location.hash.slice(1);
     var parts = nohash.split('?');
     var path = parts[0] || '/';
@@ -58,6 +63,9 @@
           'url=' + encodeURIComponent('https://pokemapper.co/' + location.hash) + '&' +
           'hashtags=pokemapper,pokemongo';
       }
+    } else if (route.path === '/news') {
+      closeWelcome();
+      newsTab.classList.add('selected');
     }
     ga('send', 'pageview', route.path);
   }
