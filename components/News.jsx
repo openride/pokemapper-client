@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const feedwind = `
 <script src="//feed.mikle.com/js/rssmikle.js"></script>
@@ -73,7 +74,12 @@ const News = () => (
         padding: '3em 4%',
     }}
   >
-    <h2>Latest Pokemon GO News</h2>
+    <h3 style={{ margin: '0 0 40px' }}>
+        <Link to="/">
+            ← Back to Pokémapper
+        </Link>
+    </h3>
+    <h2>Latest Pokémon GO News</h2>
     <div style={{ margin: '0 auto', maxWidth: 640 }}>
       <div dangerouslySetInnerHTML={{ __html: feedwind }} />
     </div>
